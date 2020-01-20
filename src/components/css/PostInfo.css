@@ -1,0 +1,140 @@
+div.post-info{
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 2fr 5fr 2fr;
+    grid-template-areas: "post-header"
+                         "post-title"
+                         "post-body"
+                         "post-footer";
+    grid-gap: 20px;
+    justify-self: stretch;
+    border-style: solid;
+    border-color: teal;
+    word-break: break-all;
+}
+
+div.post-info-preview{
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 3fr 2fr;
+    grid-template-areas: "post-header"
+                         "post-title"
+                         "post-footer";
+    grid-gap: 20px;
+    justify-self: stretch;
+    border-style: solid;
+    border-color: teal;
+    word-break: break-all;
+}
+
+/*post-header section*/
+
+div.post-header{
+    display: grid;
+    grid-area: post-header;
+    grid-template-columns: 1fr 7fr 3fr;
+    grid-template-rows: 1fr;
+    align-items: center;
+    font-size: small;
+}
+
+img.pic{
+    display: grid;
+    justify-self: center;
+    min-width: 40%;
+    max-width: 40%;
+    min-height:90%;
+    max-height: 90%;
+    border-color: silver;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 50%;
+}
+
+span.date{
+    display: grid;
+    justify-self: center;
+}
+
+/*post-header section ends here*/
+
+span.post-title{
+    grid-area: post-title;
+    font-size: large;
+    align-self: center;
+}
+
+span.post-body{
+    grid-area: post-body;
+    font-size: large;
+    align-self: center;
+}
+
+/*post-footer section begins here*/
+
+div.post-footer{
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: 1fr;
+    grid-template-areas: "communities interaction";
+    grid-area: post-footer;
+    font-size: 18px;
+}
+
+/*communities section starts here*/
+div.communities{
+    display: grid;
+    grid-area: communities;
+    grid-auto-columns: auto;
+    justify-items: left;
+    word-break: normal;
+}
+
+span.community{
+    color: teal;
+}
+
+span.community:hover{
+    color: turquoise;
+}
+
+/*communities section ends here*/
+
+/*interaction section beings here*/
+
+div.interaction{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 1fr;
+    grid-area: interaction;
+}
+
+i.active{
+    color: gold;
+}
+
+i.inactive{
+    color: red;
+}
+
+/*interaction section ends here*/
+
+span.report{
+    font-size: 10px;
+}
+
+/*post-footer section ends here*/
+
+@media screen and (max-width: 1024px){
+    div.post-info-preview{
+        grid-template-rows: 1fr 2fr 1fr;
+        grid-gap: 5px;
+    }
+
+    img.pic{
+        min-width: 100%;
+        max-width: 100%;
+        min-height: 50%;
+        max-height: 50%;
+    }
+}
