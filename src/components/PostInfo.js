@@ -1,8 +1,19 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import './css/PostInfo.css'
+import { connect } from 'react-redux'
+import { setAuthenticated, mapAuthenticatedToProps } from '../store'
 
-class PostInfo extends React.Component{
+//Note: the first argument for connect must be null when mapStateToProps is
+//absent
+
+const mapDispatchToProps = (dispatch) => {
+    return { setAuthenticated: (newState) => {
+        return dispatch(setAuthenticated(newState))
+    }}
+}
+
+class ConnectedPostInfo extends React.Component{
     constructor(props){
         super(props)
         this.state = {
@@ -16,13 +27,13 @@ class PostInfo extends React.Component{
             liked: props.info.liked,
             reported: props.info.reported,
             isPreview: props.isPreview,
-            authenticated: false
         }
 
         this.fakeLike = this.fakeLike.bind(this)
         this.fakeReport = this.fakeReport.bind(this)
         this.like = this.like.bind(this)
         this.report = this.report.bind(this)
+        this.fakeAuthentication = this.fakeAuthentication.bind(this)
     }
 
     fakeLike(){
@@ -45,6 +56,12 @@ class PostInfo extends React.Component{
         return null
     }
 
+    fakeAuthentication(){
+        let value = this.props.authenticated ? false : true
+        this.props.setAuthenticated(value)
+        alert(this.props.authenticated)
+    }
+
     render(){
         let activeOrInactive = this.state.liked ? 'active' : 'inactive'
         let likeClasses =   `fa fa-thumbs-up ${activeOrInactive}` 
@@ -57,7 +74,7 @@ class PostInfo extends React.Component{
                     <span className="date">{this.state.date}</span>
                 </div>
 
-                <span className="post-title">{this.state.title}</span>
+                <span className="post-title" onClick={this.fakeAuthentication}>{this.state.title}</span>
 
                 { !this.state.isPreview ?
                     <span className="post-body">{this.state.text}</span> :  null
@@ -71,7 +88,7 @@ class PostInfo extends React.Component{
                         })}
                     </div>
 
-                    { this.state.authenticated ?
+                    { this.props.authenticated ?
                         <div className="interaction">
                             <span className="likes">{this.state.likes}</span>
                             { !this.state.liked ?
@@ -103,9 +120,13 @@ class PostInfo extends React.Component{
     }
 }
 
-PostInfo.propTypes = {
+ConnectedPostInfo.propTypes = {
     info: PropTypes.object.isRequired,
-    isPreview: PropTypes.bool.isRequired
+    isPreview: PropTypes.bool.isRequired,
+    authenticated: PropTypes.bool.isRequired
 }
+
+const PostInfo = connect(mapAuthenticatedToProps, mapDispatchToProps)
+                        (ConnectedPostInfo)
 
 export default PostInfo
