@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import './css/PostInfo.css'
 import { connect } from 'react-redux'
 import { mapAuthenticatedToProps } from '../store/getters'
-import mapActionsToProps from '../store/actions'
+import { mapResolveUserCredentialsToProps } from '../store/actions'
 
 //Note: the first argument for connect must be null when mapStateToProps is
 //absent
@@ -125,9 +125,10 @@ ConnectedPostInfo.propTypes = {
     info : PropTypes.object.isRequired,
     isPreview : PropTypes.bool.isRequired,
     authenticated : PropTypes.bool.isRequired,
+    resolveUserCredentials : PropTypes.func.isRequired
 }
 
-const PostInfo = connect(mapAuthenticatedToProps, mapActionsToProps)
+const PostInfo = connect(mapAuthenticatedToProps, mapResolveUserCredentialsToProps)
                         (ConnectedPostInfo)
 
 export default PostInfo
