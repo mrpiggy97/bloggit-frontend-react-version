@@ -7,6 +7,23 @@ const updateQuery = (newState) => {
     return { type : "UPDATE_QUERY", payload : newState }
 }
 
+
+export const mapResolveUserCredentialsToProps = (dispatch) => {
+    return {
+        resolveUserCredentials(newState){
+            dispatch(resolveUserCredentials(newState))
+        }
+    }
+}
+
+export const mapUpdateQueryToProps = (dispatch) => {
+    return {
+        updateQuery(newState){
+            dispatch(updateQuery(newState))
+        }
+    }
+}
+
 const mapActionsToProps = (dispatch) => {
     return {
         resolveUserCredentials(newState){
