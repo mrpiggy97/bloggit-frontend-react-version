@@ -12,7 +12,7 @@ class Authentication{
         window.localStorage.removeItem('bloggit_user_communities')
 
         this.newState = {
-            authenticated : null,
+            authenticated : false,
             username : null,
             profilePic : null,
             userCommunities : null,
