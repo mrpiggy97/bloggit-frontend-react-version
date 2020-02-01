@@ -2,31 +2,26 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import './css/PostInfo.css'
 import { connect } from 'react-redux'
-import { setAuthenticated, mapAuthenticatedToProps } from '../store'
+import { mapAuthenticatedToProps } from '../store/getters'
+import mapActionsToProps from '../store/actions'
 
 //Note: the first argument for connect must be null when mapStateToProps is
 //absent
-
-const mapDispatchToProps = (dispatch) => {
-    return { setAuthenticated: (newState) => {
-        return dispatch(setAuthenticated(newState))
-    }}
-}
 
 class ConnectedPostInfo extends React.Component{
     constructor(props){
         super(props)
         this.state = {
-            owner: props.info.owner,
-            date: props.info.date,
-            title: props.info.title,
-            text: props.info.text,
-            communities: props.info.communities,
-            uuid: props.info.uuid,
-            likes: props.info.likes,
-            liked: props.info.liked,
-            reported: props.info.reported,
-            isPreview: props.isPreview,
+            owner : props.info.owner,
+            date : props.info.date,
+            title : props.info.title,
+            text : props.info.text,
+            communities : props.info.communities,
+            uuid : props.info.uuid,
+            likes : props.info.likes,
+            liked : props.info.liked,
+            reported : props.info.reported,
+            isPreview : props.isPreview,
         }
 
         this.fakeLike = this.fakeLike.bind(this)
@@ -38,13 +33,13 @@ class ConnectedPostInfo extends React.Component{
 
     fakeLike(){
         this.setState((prevState) => {
-            return {liked: prevState.liked ? false : true}
+            return {liked : prevState.liked ? false : true}
         })
     }
 
     fakeReport(){
         this.setState((prevState) => {
-            return {reported: prevState.reported ? false : true}
+            return {reported : prevState.reported ? false : true}
         })
     }
 
@@ -57,8 +52,14 @@ class ConnectedPostInfo extends React.Component{
     }
 
     fakeAuthentication(){
-        let value = this.props.authenticated ? false : true
-        this.props.setAuthenticated(value)
+        let userCredentials = {
+            token : '1234123msddadsd',
+            username : 'mrpiggy97',
+            profile_pic : null,
+            user_communities : [],
+            authenticated : this.props.authenticated ? false : true
+        }
+        this.props.resolveUserCredentials(userCredentials)
         alert(this.props.authenticated)
     }
 
@@ -121,12 +122,12 @@ class ConnectedPostInfo extends React.Component{
 }
 
 ConnectedPostInfo.propTypes = {
-    info: PropTypes.object.isRequired,
-    isPreview: PropTypes.bool.isRequired,
-    authenticated: PropTypes.bool.isRequired
+    info : PropTypes.object.isRequired,
+    isPreview : PropTypes.bool.isRequired,
+    authenticated : PropTypes.bool.isRequired,
 }
 
-const PostInfo = connect(mapAuthenticatedToProps, mapDispatchToProps)
+const PostInfo = connect(mapAuthenticatedToProps, mapActionsToProps)
                         (ConnectedPostInfo)
 
 export default PostInfo
