@@ -1,5 +1,4 @@
-import removeUserCredentials from './utils/removeUserCredentials'
-import setUserCredentials from './utils/setUserCredentials'
+import Authentication from './utils/Authentication'
 
 const initialState = {
     authenticated : window.localStorage.getItem('bloggit_token') ? true : false,
@@ -11,19 +10,10 @@ const initialState = {
 
 //reducers are in essence getters for the app
 const rootReducer = (state = initialState, { type, payload }) => {
+
     if(type === "RESOLVE_USER_CREDENTIALS"){
-
-        if(payload.authenticated){
-            //will set credentials in localStorage and return the object
-            //that will be the new state
-            return setUserCredentials(state, payload)
-        }
-
-        else{
-            //will remove credentials from local stroage and return the object
-            //that will be the new state
-            return removeUserCredentials(state)
-        }
+        let auth = new Authentication(state, payload)
+        return auth.setAuthenticationState()
     }
 
     else if(type === "UPDATE_QUERY"){
