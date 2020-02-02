@@ -1,30 +1,37 @@
 //setters for store
-const resolveUserCredentials = (newState) => {
-    return { type: "RESOLVE_USER_CREDENTIALS", payload : newState }
-}
 
-const updateQuery = (newState) => {
-    return { type : "UPDATE_QUERY", payload : newState }
-}
+const actions = {
 
+    resolveUserCredentials(newState){
+        return { type: "RESOLVE_USER_CREDENTIALS", payload : newState }
+    },
+
+    updateQuery(newState){
+        return { type : "UPDATE_QUERY", payload : newState }
+    }
+}
 
 export const mapResolveUserCredentialsToProps = (dispatch) => {
+    let action = actions.resolveUserCredentials
     return {
         resolveUserCredentials(newState){
-            dispatch(resolveUserCredentials(newState))
+            dispatch(action(newState))
         }
     }
 }
 
 export const mapUpdateQueryToProps = (dispatch) => {
+    let action = actions.updateQuery
     return {
         updateQuery(newState){
-            dispatch(updateQuery(newState))
+            dispatch(action(newState))
         }
     }
 }
 
 const mapActionsToProps = (dispatch) => {
+
+    const { resolveUserCredentials, updateQuery } = actions
     return {
         resolveUserCredentials(newState){
             dispatch(resolveUserCredentials(newState))
