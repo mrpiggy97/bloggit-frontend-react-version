@@ -8,8 +8,14 @@ import PostInfo, { ConnectedPostInfo } from '../components/PostInfo'
 const mockStore = configStore([])
 
 describe('test suit for PostInfo component', () => {
-    it('checks that component renders as expected', () => {
-        let store = mockStore({
+
+    let store
+    let info
+    let wrapper
+    let instance
+
+    beforeEach(() => {
+        store = mockStore({
             authenticated : false,
             username : null,
             userCommunities : null,
@@ -18,8 +24,7 @@ describe('test suit for PostInfo component', () => {
         })
 
         store.dispatch = jest.fn()
-
-        let info = {
+        info = {
             owner : { username : 'testnuser', profile_pic : null},
             date : "12 april 2020",
             title : "title test",
@@ -29,9 +34,16 @@ describe('test suit for PostInfo component', () => {
             liked : null,
             reported : null
         }
+    })
 
-        let wrapper
-        let instance
+    afterEach(() => {
+        store = null
+        info = null
+        wrapper = null
+        instance = null
+    })
+
+    it('checks that component renders as expected', () => {
 
         act(() => {
             wrapper = create(
