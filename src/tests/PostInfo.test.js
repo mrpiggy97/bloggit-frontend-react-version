@@ -3,7 +3,7 @@ import { create, act } from 'react-test-renderer'
 import configStore from 'redux-mock-store'
 import { Provider } from 'react-redux'
 
-import PostInfo from '../components/PostInfo'
+import PostInfo, { ConnectedPostInfo } from '../components/PostInfo'
 
 const mockStore = configStore([])
 
@@ -31,6 +31,7 @@ describe('test suit for PostInfo component', () => {
         }
 
         let wrapper
+        let instance
 
         act(() => {
             wrapper = create(
@@ -40,6 +41,8 @@ describe('test suit for PostInfo component', () => {
             )
         })
 
+        instance = wrapper.root
         expect(wrapper.toJSON()).toMatchSnapshot()
+        expect(instance.findByType(ConnectedPostInfo).props.authenticated).toBe(false)
     })
 })

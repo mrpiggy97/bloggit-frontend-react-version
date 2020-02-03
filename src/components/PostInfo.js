@@ -8,7 +8,7 @@ import { mapResolveUserCredentialsToProps } from '../store/actions'
 //Note: the first argument for connect must be null when mapStateToProps is
 //absent
 
-class ConnectedPostInfo extends React.Component{
+export class ConnectedPostInfo extends React.Component{
     constructor(props){
         super(props)
         this.state = {
@@ -65,7 +65,7 @@ class ConnectedPostInfo extends React.Component{
 
     render(){
         let activeOrInactive = this.state.liked ? 'active' : 'inactive'
-        let likeClasses =   `fa fa-thumbs-up ${activeOrInactive}` 
+        let likeClasses =   `fa fa-thumbs-up ${activeOrInactive}`
         return(
             <div className={this.state.isPreview ? 'post-info-preview' : 'post-info'}>
 
