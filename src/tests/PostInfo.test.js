@@ -1,6 +1,5 @@
 import React from 'react'
-import { render, unmountComponentAtNode } from 'react-dom'
-import { act } from 'react-dom/test-utils'
+import { create, act } from 'react-test-renderer'
 import configStore from 'redux-mock-store'
 import { Provider } from 'react-redux'
 
@@ -8,19 +7,14 @@ import PostInfo from '../components/PostInfo'
 
 const mockStore = configStore([])
 
-let container = document.createElement("div")
-document.body.appendChild(container)
-
 describe('test suit for PostInfo component', () => {
     it('checks that component renders as expected', () => {
         let store = mockStore({
-            state : {
-                authenticated : false,
-                username : null,
-                userCommunities : null,
-                profilePic : null,
-                query : ''
-            },
+            authenticated : false,
+            username : null,
+            userCommunities : null,
+            profilePic : null,
+            query : ''
         })
 
         store.dispatch = jest.fn()
@@ -39,13 +33,13 @@ describe('test suit for PostInfo component', () => {
         let wrapper
 
         act(() => {
-            render(
+            wrapper = create(
                 <Provider store={store}>
                     <PostInfo info={info} isPreview={true}/>
-                </Provider>,container
+                </Provider>
             )
         })
 
-        expect(container.children.length).toBe(1)
+        expect(wrapper.toJSON()).toMatchSnapshot()
     })
 })

@@ -1,0 +1,64 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`test suit for PostInfo component checks that component renders as expected 1`] = `
+<div
+  className="post-info-preview"
+>
+  <div
+    className="post-header"
+  >
+    <img
+      alt=""
+      className="pic"
+      src={null}
+    />
+    <span>
+      testnuser
+    </span>
+    <span
+      className="date"
+    >
+      12 april 2020
+    </span>
+  </div>
+  <span
+    className="post-title"
+    onClick={[Function]}
+  >
+    title test
+  </span>
+  <div
+    className="post-footer"
+  >
+    <div
+      className="communities"
+    >
+      <span
+        className="community"
+      >
+        c/
+        test
+      </span>
+    </div>
+    <div
+      className="interaction"
+    >
+      <span
+        className="likes"
+      >
+        1
+      </span>
+      <i
+        className="fa fa-thumbs-up inactive"
+        onClick={[Function]}
+      />
+      <span
+        className="report"
+        onClick={[Function]}
+      >
+        report
+      </span>
+    </div>
+  </div>
+</div>
+`;
