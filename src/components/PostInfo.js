@@ -60,7 +60,6 @@ export class ConnectedPostInfo extends React.Component{
             authenticated : this.props.authenticated ? false : true
         }
         this.props.resolveUserCredentials(userCredentials)
-        alert(this.props.authenticated)
     }
 
     render(){
