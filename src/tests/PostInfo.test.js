@@ -57,4 +57,34 @@ describe('test suit for PostInfo component', () => {
         expect(wrapper.toJSON()).toMatchSnapshot()
         expect(instance.findByType(ConnectedPostInfo).props.authenticated).toBe(false)
     })
+
+    it('checks that store methods work as expected', async () => {
+        wrapper = create(
+            <Provider store={store}>
+                <PostInfo info={info} isPreview={true}></PostInfo>
+            </Provider>
+        )
+
+        instance = wrapper.root
+        let expectedPayload = {
+            username : "mrpiggy97",
+            profile_pic : null,
+            token : "1234123msddadsd",
+            user_communities : [],
+            authenticated : true
+        }
+
+        let expectedType = "RESOLVE_USER_CREDENTIALS"
+
+        act(() => {
+            let connectedComponent = instance.findByType(ConnectedPostInfo)
+            connectedComponent.findByProps({ className : "post-title"}).props.onClick()            
+        })
+
+        expect(store.dispatch).toHaveBeenCalledTimes(1)
+        expect(store.dispatch).toHaveBeenCalledWith({
+            type : expectedType,
+            payload : expectedPayload
+        })
+    })
 })
