@@ -5,6 +5,9 @@ import { connect } from 'react-redux'
 import { mapAuthenticatedToProps } from '../store/getters'
 import { mapResolveUserCredentialsToProps } from '../store/actions'
 
+import likePost from '../services/PostServices/likePost.js'
+import reportPost from '../services/PostServices/reportPost.js'
+
 //Note: the first argument for connect must be null when mapStateToProps is
 //absent
 
@@ -39,16 +42,59 @@ export class ConnectedPostInfo extends React.Component{
 
     fakeReport(){
         this.setState((prevState) => {
-            return {reported : prevState.reported ? false : true}
+            return { reported : prevState.reported ? false : true }
         })
     }
 
-    like(){
-        return null
+    async like(){
+
+        if(this.state.liked || !this.props.authenticated){
+            return null
+        }
+
+        else if(!this.state.liked && this.props.authenticated){
+            try {
+                await likePost(this.state.uuid)
+                this.setState((prevState) => {
+                    return { likes : prevState.likes + 1, liked : true }
+                })
+            }
+            catch (error) {
+                console.log("error ocurred at PostInfo component at like method")
+                console.log(error.request.status)
+
+                if(error.request.status == 401 || error.request.status == 403){
+                    this.props.resolveUserCredentials({ authenticated : false })
+                }
+            }
+        }
     }
 
-    report(){
-        return null
+    async report(){
+        
+        if(this.state.reported || !this.props.authenticated){
+            return null
+        }
+        
+        else if(!this.state.reported && this.props.authenticated){
+
+            try {
+                await reportPost(this.state.uuid)
+                this.setState(() => {
+                    return { reported : true }
+                })
+            }
+
+            catch (error) {
+                console.log("error ocurred at PostInfo component at")
+                console.log("report method")
+                console.log(error.request.status)
+
+                if(error.request.status == 401 || error.request.status == 403){
+                    this.props.resolveUserCredentials({ authenticated : false })
+                }
+            }
+        }
     }
 
     fakeAuthentication(){
@@ -64,7 +110,7 @@ export class ConnectedPostInfo extends React.Component{
 
     render(){
         let activeOrInactive = this.state.liked ? 'active' : 'inactive'
-        let likeClasses =   `fa fa-thumbs-up ${activeOrInactive}`
+        let likeClasses = `fa fa-thumbs-up ${activeOrInactive}`
         return(
             <div className={this.state.isPreview ? 'post-info-preview' : 'post-info'}>
 
