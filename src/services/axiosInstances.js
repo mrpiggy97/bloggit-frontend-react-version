@@ -1,7 +1,8 @@
 import axios from 'axios'
 
+const BASE_API_URL = process.env.REACT_APP_BLOGGIT_API_URL
 export const authenticateTokenInstance = axios.create({
-    baseURL: process.env.REACT_APP_API_URL,
+    baseURL: BASE_API_URL,
     headers:{
         Authorization: `JWT ${window.localStorage.getItem('bloggit_token')}`
     },
@@ -9,7 +10,7 @@ export const authenticateTokenInstance = axios.create({
 })
 
 export const CreateModifyInstance = axios.create({
-    baseURL: process.env.REACT_APP_API_URL,
+    baseURL: BASE_API_URL,
     headers:{
         Authorization: `JWT ${window.localStorage.getItem('bloggit_token')}`,
         'Content-type': 'application/json',
@@ -19,6 +20,6 @@ export const CreateModifyInstance = axios.create({
 })
 
 export const withoutTokenInstance = axios.create({
-    baseURL: process.env.REACT_APP_API_URL,
+    baseURL: BASE_API_URL,
     timeout: 5000
 })
