@@ -16,6 +16,7 @@ describe('test suit for PostInfo component', () => {
     let wrapper
     let instance
     let connectedComponent
+    let titleProps = { className : 'post-title' }
 
     beforeEach(() => {
         store = mockStore({
@@ -46,7 +47,11 @@ describe('test suit for PostInfo component', () => {
             )
         })
 
-        instance = wrapper.root
+        act(() => {
+            instance = wrapper.root
+            connectedComponent = instance.findByType(ConnectedPostInfo)
+            connectedComponent.findByProps(titleProps).props.onClick()
+        })
     })
 
     afterEach(() => {
@@ -54,6 +59,7 @@ describe('test suit for PostInfo component', () => {
         info = null
         wrapper = null
         instance = null
+        connectedComponent = null
     })
 
     it('checks that component renders as expected', () => {
@@ -72,11 +78,6 @@ describe('test suit for PostInfo component', () => {
 
         let expectedType = "RESOLVE_USER_CREDENTIALS"
 
-        act(() => {
-            connectedComponent = instance.findByType(ConnectedPostInfo)
-            connectedComponent.findByProps({ className : "post-title"}).props.onClick()            
-        })
-
         expect(store.dispatch).toHaveBeenCalledTimes(1)
         expect(store.dispatch).toHaveBeenCalledWith({
             type : expectedType,
@@ -92,8 +93,9 @@ describe('test methods that call an api', () => {
     let store
     let wrapper
     let instance
-    let props1 = { className : 'fa fa-thumbs-up inactive' }
-    let props2 = { className : 'likes' }
+    let likeProps = { className : 'fa fa-thumbs-up inactive' }
+    let likesProps = { className : 'likes' }
+    let reportedProps = { className : 'report' }
 
     beforeEach(() => {
         info = {
@@ -127,7 +129,8 @@ describe('test methods that call an api', () => {
         //then we can use instance to update component
         act(() => {
             instance = wrapper.root
-            instance.findByProps(props1).props.onClick()
+            instance.findByProps(likeProps).props.onClick()
+            instance.findByProps(reportedProps).props.onClick()
         })
     })
 
@@ -139,9 +142,10 @@ describe('test methods that call an api', () => {
     })
 
     it('checks that like method works as expected', () => {
-        expect(instance.findByProps(props2).children[0]).toBe("2")
+        expect(instance.findByProps(likesProps).children[0]).toBe("2")
         //trying to find the element should throw an error since
-        //liked is now false
-        expect(() => instance.findByProps(props1)).toThrow()
+        //liked and reported are supposed to be false
+        expect(() => instance.findByProps(likeProps)).toThrow()
+        expect(() => instance.findByProps(reportedProps)).toThrow()
     })
 })
