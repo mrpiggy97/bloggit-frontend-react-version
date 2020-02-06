@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import './css/PostInfo.css'
 import { connect } from 'react-redux'
-import { mapAuthenticatedToProps } from '../store/getters'
 import { mapResolveUserCredentialsToProps } from '../store/actions'
 
 import likePost from '../services/PostServices/likePost.js'
@@ -36,7 +35,7 @@ export class ConnectedPostInfo extends React.Component{
 
     fakeLike(){
         this.setState((prevState) => {
-            return {liked : prevState.liked ? false : true}
+            return { liked : prevState.liked ? false : true }
         })
     }
 
@@ -48,11 +47,11 @@ export class ConnectedPostInfo extends React.Component{
 
     async like(){
 
-        if(this.state.liked || !this.props.authenticated){
+        if(this.state.liked || !this.props.Isauthenticated){
             return null
         }
 
-        else if(!this.state.liked && this.props.authenticated){
+        else if(!this.state.liked && this.props.Isauthenticated){
             try {
                 await likePost(this.state.uuid)
                 this.setState((prevState) => {
@@ -72,11 +71,11 @@ export class ConnectedPostInfo extends React.Component{
 
     async report(){
         
-        if(this.state.reported || !this.props.authenticated){
+        if(this.state.reported || !this.props.Isauthenticated){
             return null
         }
         
-        else if(!this.state.reported && this.props.authenticated){
+        else if(!this.state.reported && this.props.Isauthenticated){
 
             try {
                 await reportPost(this.state.uuid)
@@ -103,7 +102,7 @@ export class ConnectedPostInfo extends React.Component{
             username : 'mrpiggy97',
             profile_pic : null,
             user_communities : [],
-            authenticated : this.props.authenticated ? false : true
+            authenticated : this.props.Isauthenticated ? false : true
         }
         this.props.resolveUserCredentials(userCredentials)
     }
@@ -134,7 +133,7 @@ export class ConnectedPostInfo extends React.Component{
                         })}
                     </div>
 
-                    { this.props.authenticated ?
+                    { this.props.Isauthenticated ?
                         <div className="interaction">
                             <span className="likes">{this.state.likes}</span>
                             { !this.state.liked ?
@@ -169,11 +168,11 @@ export class ConnectedPostInfo extends React.Component{
 ConnectedPostInfo.propTypes = {
     info : PropTypes.object.isRequired,
     isPreview : PropTypes.bool.isRequired,
-    authenticated : PropTypes.bool.isRequired,
+    Isauthenticated : PropTypes.bool.isRequired,
     resolveUserCredentials : PropTypes.func.isRequired
 }
 
-const PostInfo = connect(mapAuthenticatedToProps, mapResolveUserCredentialsToProps)
+const PostInfo = connect(null, mapResolveUserCredentialsToProps)
                         (ConnectedPostInfo)
 
 export default PostInfo
