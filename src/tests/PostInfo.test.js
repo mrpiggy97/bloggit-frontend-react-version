@@ -42,7 +42,7 @@ describe('test suit for PostInfo component', () => {
         act(() => {
             wrapper = create(
                 <Provider store={store}>
-                    <PostInfo info={info} isPreview={true}/>
+                    <PostInfo info={info} isPreview={true} Isauthenticated={false}/>
                 </Provider>
             )
         })
@@ -64,7 +64,7 @@ describe('test suit for PostInfo component', () => {
 
     it('checks that component renders as expected', () => {
         expect(wrapper.toJSON()).toMatchSnapshot()
-        expect(instance.findByType(ConnectedPostInfo).props.authenticated).toBe(false)
+        expect(instance.findByType(ConnectedPostInfo).props.Isauthenticated).toBe(false)
     })
 
     it('checks that store methods work as expected', async () => {
@@ -122,7 +122,7 @@ describe('test methods that call an api', () => {
         act(() => {
             wrapper = create(
                 <Provider store={store}>
-                    <PostInfo info={info} isPreview={true}/>
+                    <PostInfo info={info} isPreview={true} Isauthenticated={true}/>
                 </Provider>
             )
         })
