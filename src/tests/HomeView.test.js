@@ -59,3 +59,50 @@ describe('check the basic functionality of the view', () => {
         })
     })
 })
+
+
+describe('check methods work as expected', () => {
+
+    let store
+    let wrapper
+    let instance
+    
+    beforeEach(() => {
+
+        store = mockStore({
+            authenticated : false,
+            username : null,
+            profilePic : null,
+            userCommunities : null,
+            token : null
+        })
+
+        store.dispatch = jest.fn()
+
+        act(() => {
+            wrapper = create(
+                <Provider store={store}>
+                    <HomeView posts={[]}/>
+                </Provider>
+            )
+        })
+
+        instance = wrapper.root
+    })
+
+    afterEach(() => {
+        store = null
+        wrapper = null
+        instance = null
+    })
+
+    it('check that current posts are the ones correspoind to page 2', () => {
+        let post = instance.findByProps({ className : 'posts' }).children[0]
+        let title = post.findByProps({ className : 'post-title' }).children[0]
+        act(() => {
+            instance.findByProps({className:'next-page-active'}).props.onClick()
+        })
+        let expectedTitle = "this is the title of the first post in the second page"
+        expect(title).toBe(title)
+    })
+})
