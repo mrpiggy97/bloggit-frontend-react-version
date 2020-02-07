@@ -36,7 +36,8 @@ describe('test suit for PostInfo component', () => {
             communities : ["test"],
             likes : 1,
             liked : null,
-            reported : null
+            reported : null,
+            uuid : '1239128wassdcasd'
         }
 
         act(() => {
@@ -106,7 +107,8 @@ describe('test methods that call an api', () => {
             communities : ['test'],
             likes : 1,
             liked : false,
-            reported : false 
+            reported : false,
+            uuid : 'asdasdmMMMMM'
         }
 
         store = mockStore({
