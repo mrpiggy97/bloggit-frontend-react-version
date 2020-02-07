@@ -3,7 +3,7 @@ import { create,  act } from 'react-test-renderer'
 import configStore from 'redux-mock-store'
 import { Provider } from 'react-redux'
 
-import HomeView from 'views/HomeView'
+import HomeView, { ConnectedHomeView } from 'views/HomeView'
 
 const mockStore = configStore([])
 jest.mock('services/PostServices/getPosts')
@@ -57,56 +57,5 @@ describe('check the basic functionality of the view', () => {
                 authenticated : false
             }
         })
-    })
-})
-
-
-describe('test async methods', () => {
-    let store
-    let instance
-    let wrapper
-    let postsProps = { className : 'posts' }
-    let postProps = { className : 'post-title'}
-    let nextPageProps = { className : 'next-page-active' }
-
-    beforeEach(() => {
-        store = mockStore({
-            authenticated : false,
-            username : null,
-            profilePic : null,
-            userCommunities : null,
-            token : '124;;l12m34'
-        })
-        store.dispatch = jest.fn()
-
-        act(() => {
-            wrapper = create(
-                <Provider store={store}>
-                    <HomeView posts={[]}/>
-                </Provider>
-            )
-        })
-
-        act(() => {
-            instance = wrapper.root
-        })
-    })
-
-    afterEach(() => {
-        wrapper = null
-        store = null
-        instance = null
-
-    })
-
-    it('checks getNextPagePosts works as expected', () => {
-        act(() => {
-            instance.findByProps(nextPageProps).props.onClick()
-        })
-
-        let post = instance.findProps(postsProps).children[0]
-        let postTitle = post.findByProps(postProps).children[0]
-        let expectedTitle = "this is the title of the first post in the second page"
-        expect(postTitle).toBe(expectedTitle)
     })
 })
