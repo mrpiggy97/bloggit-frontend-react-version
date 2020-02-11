@@ -5,17 +5,26 @@ class Authentication{
         this.newState = null
     }
 
-    removeUserCredentials(){
+    static removeUserItemsFromStorage(){
         window.localStorage.removeItem('bloggit_token')
         window.localStorage.removeItem('bloggit_username')
         window.localStorage.removeItem('bloggit_profile_pic')
         window.localStorage.removeItem('bloggit_user_communities')
+    }
 
+    removeUserCredentials(){
+
+        window.localStorage.removeItem('bloggit_token')
+        window.localStorage.removeItem('bloggit_username')
+        window.localStorage.removeItem('bloggit_profile_pic')
+        window.localStorage.removeItem('bloggit_user_communities')
+        
         this.newState = {
             authenticated : false,
             username : null,
             profilePic : null,
             userCommunities : null,
+            token : null
         }
 
         return Object.assign({}, this.prevState, this.newState)
