@@ -5,7 +5,10 @@ const initialState = {
     username : window.localStorage.getItem('bloggit_username'),
     profilePic : window.localStorage.getItem('bloggit_profile_pic'),
     userCommunities : window.localStorage.getItem('bloggit_user_communities'),
-    query : ''
+    posts : [],
+    nextPage : 0,
+    previousPage : 0,
+    fetchingPosts : false
 }
 
 //reducers are in essence getters for the app
@@ -16,8 +19,16 @@ const rootReducer = (state = initialState, { type, payload }) => {
         return auth.setAuthenticationState()
     }
 
-    else if(type === "UPDATE_QUERY"){
-        return Object.assign({}, state, { query : payload })
+    else if(type === "UPDATE_POSTS_PENDING"){
+        //payload is supposed to be a url containing a page number to get that
+        //page posts.
+        //If user token has expired updatePosts will also remove said token,
+        //in the same way auth.setAuthenticated would
+        return Object.assign({}, state, { fetchingPosts : true} )
+    }
+
+    else if(type === "UPDATE_POSTS_FULFILLED"){
+        return Object.assign({}, state, payload)
     }
 
     return state
