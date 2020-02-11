@@ -8,7 +8,11 @@ const initialState = {
     posts : [],
     nextPage : 0,
     previousPage : 0,
-    fetchingPosts : false
+    fetchingPosts : false,
+    fetchingStatus : {
+        success : null,
+        code : null
+    }
 }
 
 //reducers are in essence getters for the app
@@ -28,6 +32,17 @@ const rootReducer = (state = initialState, { type, payload }) => {
     }
 
     else if(type === "UPDATE_POSTS_FULFILLED"){
+        if(payload.authenticated !== state.authenticated){
+            Authentication.removeUserItemsFromStorage()
+            payload.username = null
+            payload.token = null
+            payload.userCommunities = null
+            payload.profilePic = null
+        }
+        return Object.assign({}, state, payload)
+    }
+
+    else if(type === "UPDATE_POSTS_FAILED"){
         return Object.assign({}, state, payload)
     }
 
