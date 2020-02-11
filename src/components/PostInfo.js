@@ -62,7 +62,7 @@ export class ConnectedPostInfo extends React.Component{
                 console.log("error ocurred at PostInfo component at like method")
                 console.log(error.request.status)
 
-                if(error.request.status == 401 || error.request.status == 403){
+                if(error.request.status === 401 || error.request.status === 403){
                     this.props.resolveUserCredentials({ authenticated : false })
                 }
             }
@@ -89,7 +89,7 @@ export class ConnectedPostInfo extends React.Component{
                 console.log("report method")
                 console.log(error.request.status)
 
-                if(error.request.status == 401 || error.request.status == 403){
+                if(error.request.status === 401 || error.request.status === 403){
                     this.props.resolveUserCredentials({ authenticated : false })
                 }
             }
