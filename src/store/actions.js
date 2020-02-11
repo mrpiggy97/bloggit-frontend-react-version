@@ -1,13 +1,15 @@
 //setters for store
 
+import updatePosts from 'store/utils/updatePosts'
+
 const actions = {
 
     resolveUserCredentials(newState){
         return { type: "RESOLVE_USER_CREDENTIALS", payload : newState }
     },
 
-    updateQuery(newState){
-        return { type : "UPDATE_QUERY", payload : newState }
+    updatePosts(url){
+        return { type : "UPDATE_POSTS", payload : updatePosts(url) }
     }
 }
 
@@ -20,26 +22,22 @@ export const mapResolveUserCredentialsToProps = (dispatch) => {
     }
 }
 
-export const mapUpdateQueryToProps = (dispatch) => {
-    let action = actions.updateQuery
+export const mapUpdatePostsToProps = (dispatch) => {
+    let action = actions.updatePosts
     return {
-        updateQuery(newState){
-            dispatch(action(newState))
+        updatePosts(url){
+            dispatch(action(url))
         }
     }
 }
 
 const mapActionsToProps = (dispatch) => {
 
-    const { resolveUserCredentials, updateQuery } = actions
+    const { resolveUserCredentials } = actions
     return {
         resolveUserCredentials(newState){
             dispatch(resolveUserCredentials(newState))
-        },
-
-        updateQuery(newState){
-            dispatch(updateQuery(newState))
-        }        
+        }       
     }
 }
 
