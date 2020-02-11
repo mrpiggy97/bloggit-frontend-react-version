@@ -3,70 +3,66 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
 import PostInfo from '../components/PostInfo'
-import { mapAuthenticatedToProps } from 'store/getters'
-import { mapResolveUserCredentialsToProps } from 'store/actions'
+import {  mapUpdatePostsToProps } from 'store/actions'
 import './css/HomeView.css'
-import getPosts from 'services/PostServices/getPosts'
+
+const mapStoreToProps = (state) => {
+    return {
+        authenticated : state.authenticated,
+        posts : state.posts,
+        nextPage : state.nextPage,
+        previousPage : state.previousPage
+    }
+
+}
 
 export class ConnectedHomeView extends React.Component{
     constructor(props){
         super(props)
+
         this.state = {
             posts : props.posts,
-            page : 1,
-            nextPage : null,
-            previousPage : null
+            nextPage : props.nextPage,
+            previousPage : props.previousPage
         }
 
         this.getNextPagePosts = this.getNextPagePosts.bind(this)
         this.getPreviousPagePosts = this.getPreviousPagePosts.bind(this)
     }
 
-    async getPagePosts(page){
-
-        try {
-            let response = await getPosts(page)
-            this.setState(() => {
-                return {
-                    posts : response.data.results,
-                    nextPage : response.data.next_page,
-                    previousPage : response.data.previous_page,
-                    page : page
-                }
-            })
-            console.log(page)
-
-            if(response.data.authenticated !== this.props.authenticated){
-                //this means token has expired and we should
-                //resolve those credentials, in this case that means deleting
-                //the token and settting user information to null
-                this.props.resolveUserCredentials({ authenticated : false })
-            }
-        }
-        
-        catch (error) {
-            console.log("error ocurred at HomeView at getPagePosts method")
-            console.log(error)
-        }
-    }
-
     getNextPagePosts(){
-        if(!this.state.nextPage){
-            return null
-        }
-
-        this.getPagePosts(this.state.nextPage)
+        this.props.updatePosts(this.state.nextURL)
     }
 
     getPreviousPagePosts(){
-        if(!this.state.previousPage){
-            return null
-        }
+        this.props.updatePosts(this.state.previousURL)
+    }
 
-        this.getPagePosts(this.state.previousPage)
+    componentDidMount(){
+        let initialURL = `posts/?page=${1}`
+        this.props.updatePosts(initialURL)
+    }
+
+    componentDidUpdate(prevProps){
+
+        if(prevProps.posts !== this.props.posts){
+            this.setState({
+                posts : this.props.posts,
+                nextPage : this.props.nextPage,
+                previousPage : this.props.previousPage,
+                authenticated : this.props.authenticated
+            })            
+        }
     }
 
     render(){
+
+        let nextPage = this.state.nextPage
+        let previousPage = this.state.previousPage
+
+        let nextPageURL = nextPage ? `posts/?page=${nextPage}` : null
+        let previousPageURL = previousPage ? `posts/?page=${previousPage}` : null
+
         return(
             <div id="home-view">
                 <div className="posts">
@@ -76,36 +72,31 @@ export class ConnectedHomeView extends React.Component{
                     })}          
                 </div>
                 <div className="pagination-arrows">
-                    {this.state.previousPage ?
+                    {previousPageURL ?
                         <span className="previous-page-active"
-                        onClick={this.getPreviousPagePosts}>prev</span> :
+                        onClick={this.getPreviousPagePosts}>prev page</span> :
                         <span className="previous-page-inactive">prev</span>
                     }
 
-                    {this.state.nextPage ?
+                    {nextPageURL ?
                         <span className="next-page-active"
-                        onClick={this.getNextPagePosts}>next</span> :
+                        onClick={this.getNextPagePosts}>next page</span> :
                         <span className="next-page-inactive">next</span>
                     }
                 </div>
             </div>
         )
     }
-
-    componentDidMount(){
-        if(this.props.posts.length == 0){
-            this.getPagePosts(1)
-        }
-    }
 }
 
 ConnectedHomeView.propsTypes = {
     authenticated : PropTypes.bool.isRequired,
-    resolveUserCredentials : PropTypes.func.isRequired,
-    posts : PropTypes.array.isRequired
+    updatePosts : PropTypes.func.isRequired,
+    posts : PropTypes.array.isRequired,
+    nextPage : PropTypes.number,
+    previousPage : PropTypes.number
 }
 
-const HomeView = connect(mapAuthenticatedToProps, mapResolveUserCredentialsToProps)
-                        (ConnectedHomeView)
+const HomeView = connect(mapStoreToProps, mapUpdatePostsToProps)(ConnectedHomeView)
 
 export default HomeView
