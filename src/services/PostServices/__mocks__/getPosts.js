@@ -1,17 +1,18 @@
 import { page1, page2, page3 } from 'tests/utils/dataByPage'
 
-const getPosts = (page) => {
+const getPosts = (url) => {
     let currentPage
 
-    switch (page) {
-        case 1:
+    switch (url) {
+        case `posts/?page=${1}`:
             currentPage = page1
             break;
-        case 2:
+        case `posts/?page=${2}`:
             currentPage = page2
             break;
-        case 3:
+        case `posts/?page=${3}`:
             currentPage = page3;
+            break;
     
         default:
             currentPage = page1
