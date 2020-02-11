@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import './css/PostInfo.css'
 import { connect } from 'react-redux'
-import { mapResolveUserCredentialsToProps } from '../store/actions'
+import { mapResolveUserCredentialsToProps } from '../store/mapActions'
 
 import likePost from '../services/PostServices/likePost.js'
 import reportPost from '../services/PostServices/reportPost.js'
