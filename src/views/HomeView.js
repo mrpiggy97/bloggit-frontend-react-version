@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
 import PostInfo from '../components/PostInfo'
-import {  mapUpdatePostsToProps } from 'store/actions'
+import {  mapUpdatePostsToProps } from 'store/mapActions'
 import './css/HomeView.css'
 
 const mapStoreToProps = (state) => {
