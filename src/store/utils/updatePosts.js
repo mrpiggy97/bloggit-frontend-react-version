@@ -8,7 +8,11 @@ const updatePosts = async (url) => {
             posts : response.data.results,
             nextPage : response.data.next_page,
             previousPage : response.data.previous_page,
-            authenticated : response.data.authenticated
+            authenticated : response.data.authenticated,
+            fetchingStatus : {
+                success : true,
+                status : response.status
+            }
         }
 
         return newState
@@ -17,6 +21,12 @@ const updatePosts = async (url) => {
     catch (error) {
         console.log(error)
         console.log("error ocurred in HomeViewGetPage")
+        return {
+            fetchingStatus : {
+                success : false,
+                status : error.request.status
+            }
+        }
     }
 }
 
