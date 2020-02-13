@@ -8,8 +8,8 @@ const actions = {
         return { type: "RESOLVE_USER_CREDENTIALS", payload : newState }
     },
     //these is an async action
-    updatePosts(url){
-        return { type : "UPDATE_POSTS", payload : updatePosts(url) }
+    updatePosts(page){
+        return { type : "UPDATE_POSTS", payload : updatePosts(page) }
     }    
 }
 

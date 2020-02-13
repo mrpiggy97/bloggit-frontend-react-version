@@ -13,8 +13,8 @@ export const mapResolveUserCredentialsToProps = (dispatch) => {
 export const mapUpdatePostsToProps = (dispatch) => {
     let action = actions.updatePosts
     return {
-        updatePosts(url){
-            dispatch(action(url))
+        updatePosts(page){
+            dispatch(action(page))
         }
     }
 }
@@ -24,8 +24,8 @@ const mapActionsToProps = (dispatch) => {
         resolveUserCredentials(newState){
             dispatch(actions.resolveUserCredentials(newState))
         },
-        updatePosts(url){
-            dispatch(actions.updatePosts(url))
+        updatePosts(page){
+            dispatch(actions.updatePosts(page))
         }
     }
 }

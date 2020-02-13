@@ -1,16 +1,16 @@
 import { authenticateTokenInstance, withoutTokenInstance } from '../axiosInstances'
 
-const getPosts = (url) => {
+const getPosts = (page) => {
     if(window.localStorage.getItem('bloggit_token')){
         return authenticateTokenInstance({
             method: 'get',
-            url: url,
+            url: `posts/?page=${page}`,
         })
     }
     else{
         return withoutTokenInstance({
             method: 'get',
-            url: url
+            url: `posts/?page=${page}`
         })
     }
 }
