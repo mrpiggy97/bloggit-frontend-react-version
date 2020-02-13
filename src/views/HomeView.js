@@ -7,6 +7,7 @@ import {  mapUpdatePostsToProps } from 'store/mapActions'
 import './css/HomeView.css'
 
 const mapStoreToProps = (state) => {
+    console.log(state.posts)
     return {
         authenticated : state.authenticated,
         posts : state.posts,
@@ -35,16 +36,14 @@ export class ConnectedHomeView extends React.Component{
         if(this.state.nextPage <= 0){
             return null
         }
-        let nextURL = `posts/?page=${this.state.nextPage}`
-        this.props.updatePosts(nextURL)
+        this.props.updatePosts(this.state.nextPage)
     }
 
     getPreviousPagePosts(){
         if(this.state.previousPage <= 0){
             return null
         }
-        let previousURL = `posts/?page=${this.state.previousPage}`
-        this.props.updatePosts(previousURL)
+        this.props.updatePosts(this.state.previousPage)
     }
 
     componentDidMount(){
