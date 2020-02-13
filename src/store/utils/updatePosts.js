@@ -1,9 +1,9 @@
 //import getPosts from 'services/PostServices/getPosts'
 import getPosts from 'services/PostServices/__mocks__/getPosts'
 
-const updatePosts = async (url) => {
+const updatePosts = async (page) => {
     try {
-        let response = await getPosts(url)
+        let response = await getPosts(page)
         let newState = {
             posts : response.data.results,
             nextPage : response.data.next_page,
