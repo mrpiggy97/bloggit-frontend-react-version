@@ -5,10 +5,10 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
-import { createPromise } from 'redux-promise-middleware';
+import promise from 'redux-promise-middleware';
 import rootReducer from './store/reducers';
 
-const middleware = applyMiddleware(createPromise())
+const middleware = applyMiddleware(promise)
 
 const store = createStore(rootReducer, middleware)
 
