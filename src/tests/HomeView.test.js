@@ -2,13 +2,11 @@ import React from 'react'
 import promise from 'redux-promise-middleware'
 import configStore from 'redux-mock-store'
 import { render, fireEvent } from '@testing-library/react'
-import { unmountComponentAtNode } from 'react-dom'
 import { Provider } from 'react-redux'
 
 
 import HomeView from 'views/HomeView'
 import { page1 } from 'tests/utils/dataByPage'
-
 
 
 const middlewares = [promise]
@@ -64,7 +62,7 @@ describe('initial test for HomeView view', () => {
         expect(store.dispatch).toHaveBeenCalledTimes(1)
     })
 
-    it('sit', () => {
+    it('checks expected render given render with posts', () => {
 
         let wrapper = render(
             <Provider store={store2}>
@@ -72,5 +70,8 @@ describe('initial test for HomeView view', () => {
             </Provider>
         )
         expect(wrapper.getByText('next page')).toBeInTheDocument()
+        expect(store2.dispatch).toHaveBeenCalledTimes(0)
+        fireEvent.click(wrapper.getByText("next page"))
+        expect(store2.dispatch).toHaveBeenCalledTimes(1)
     })
 })
