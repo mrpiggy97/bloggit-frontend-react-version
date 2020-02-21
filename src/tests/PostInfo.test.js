@@ -1,7 +1,8 @@
 import React from 'react'
 import { create, act } from 'react-test-renderer'
-import configStore from 'redux-mock-store'
 import { Provider } from 'react-redux'
+import { render, fireEvent } from '@testing-library/react'
+import configStore from 'redux-mock-store'
 
 import PostInfo, { ConnectedPostInfo } from 'components/PostInfo'
 
@@ -149,5 +150,53 @@ describe('test methods that call an api', () => {
         //liked and reported are supposed to be false
         expect(() => instance.findByProps(likeProps)).toThrow()
         expect(() => instance.findByProps(reportedProps)).toThrow()
+    })
+})
+
+
+describe('test the dom', () => {
+    let store = null
+    let wrapper = null
+    let info = {
+        date : "12 april 2020",
+        owner : { username : 'test111', profile_pic : null },
+        title : 'this is a title',
+        text : 'this is the text',
+        communities : ['test'],
+        likes : 1,
+        liked : null,
+        reported : null
+    }
+
+    beforeEach(() => {
+        store = mockStore({
+            authenticated : false,
+            username : null,
+            userCommunities : null,
+            profilePic : null,
+            token : null,
+            posts : [],
+            previousPage : 0,
+            nextPage : 0,
+            fetchingPosts : {
+                success : null,
+                code : null 
+            }
+        })
+
+        wrapper = render(
+            <Provider store={store}>
+                <PostInfo isPreview={false} IsAuthenticated={false} info={info}/>
+            </Provider>
+        )
+    })
+
+    afterEach(() => {
+        store = null
+        wrapper = null
+    })
+
+    it('checks no problem arises with the dom', () => {
+        expect(wrapper.getByText(info.owner.username)).toBeInTheDocument()
     })
 })
