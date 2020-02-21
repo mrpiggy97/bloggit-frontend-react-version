@@ -47,11 +47,11 @@ export class ConnectedPostInfo extends React.Component{
 
     async like(){
 
-        if(this.state.liked || !this.props.Isauthenticated){
+        if(this.state.liked || !this.props.IsAuthenticated){
             return null
         }
 
-        else if(!this.state.liked && this.props.Isauthenticated){
+        else if(!this.state.liked && this.props.IsAuthenticated){
             try {
                 await likePost(this.state.uuid)
                 this.setState((prevState) => {
@@ -71,11 +71,11 @@ export class ConnectedPostInfo extends React.Component{
 
     async report(){
         
-        if(this.state.reported || !this.props.Isauthenticated){
+        if(this.state.reported || !this.props.IsAuthenticated){
             return null
         }
         
-        else if(!this.state.reported && this.props.Isauthenticated){
+        else if(!this.state.reported && this.props.IsAuthenticated){
 
             try {
                 await reportPost(this.state.uuid)
@@ -102,7 +102,7 @@ export class ConnectedPostInfo extends React.Component{
             username : 'mrpiggy97',
             profile_pic : null,
             user_communities : [],
-            authenticated : this.props.Isauthenticated ? false : true
+            authenticated : this.props.IsAuthenticated ? false : true
         }
         this.props.resolveUserCredentials(userCredentials)
     }
@@ -133,7 +133,7 @@ export class ConnectedPostInfo extends React.Component{
                         })}
                     </div>
 
-                    { this.props.Isauthenticated ?
+                    { this.props.IsAuthenticated ?
                         <div className="interaction">
                             <span className="likes">{this.state.likes}</span>
                             { !this.state.liked ?
@@ -168,7 +168,7 @@ export class ConnectedPostInfo extends React.Component{
 ConnectedPostInfo.propTypes = {
     info : PropTypes.object.isRequired,
     isPreview : PropTypes.bool.isRequired,
-    Isauthenticated : PropTypes.bool.isRequired,
+    IsAuthenticated : PropTypes.bool.isRequired,
     resolveUserCredentials : PropTypes.func.isRequired
 }
 

@@ -68,7 +68,7 @@ export class ConnectedHomeView extends React.Component{
                 <div className="posts">
                     {this.state.posts.map(post => {
                         return <PostInfo info={post} isPreview={true} key={post.uuid}
-                                    Isauthenticated={this.props.authenticated}/>
+                                    IsAuthenticated={this.props.authenticated}/>
                     })}          
                 </div>
                 <div className="pagination-arrows">
