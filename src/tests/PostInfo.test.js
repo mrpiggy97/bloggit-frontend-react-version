@@ -3,16 +3,50 @@ import { create, act } from 'react-test-renderer'
 import { Provider } from 'react-redux'
 import { render, fireEvent } from '@testing-library/react'
 import configStore from 'redux-mock-store'
+import promise from 'redux-mock-store'
 
 import PostInfo, { ConnectedPostInfo } from 'components/PostInfo'
 
-const mockStore = configStore([])
+const mockStore = configStore([promise])
 jest.mock("services/PostServices/likePost")
 jest.mock("services/PostServices/reportPost")
 
+const UnauthenticateStore = mockStore({
+    authenticated : false,
+    token : null,
+    username : null,
+    userCommunities : null,
+    profilePic : null,
+    posts : [],
+    nextPage : 0,
+    previousPage : 0,
+    fetchingPosts : {
+        success : null,
+        code : null
+    }
+})
+
+UnauthenticateStore.dispatch = jest.fn()
+
+const AuthenticatedStore = mockStore({
+    authenticated : true,
+    username : 'testinguser2',
+    profilePic : null,
+    userCommunities : [],
+    posts : [],
+    token : '23123123sadasd',
+    nextPage : 0,
+    previousPage : 0,
+    fetchingPosts : {
+        success : true,
+        code : 200,
+    }
+})
+
+AuthenticatedStore.dispatch = jest.fn()
+
 describe('test suit for PostInfo component', () => {
 
-    let store
     let info
     let wrapper
     let instance
@@ -20,15 +54,6 @@ describe('test suit for PostInfo component', () => {
     let titleProps = { className : 'post-title' }
 
     beforeEach(() => {
-        store = mockStore({
-            authenticated : false,
-            username : null,
-            userCommunities : null,
-            profilePic : null,
-            query : ''
-        })
-
-        store.dispatch = jest.fn()
         info = {
             owner : { username : 'testnuser', profile_pic : null},
             date : "12 april 2020",
@@ -43,7 +68,7 @@ describe('test suit for PostInfo component', () => {
 
         act(() => {
             wrapper = create(
-                <Provider store={store}>
+                <Provider store={UnauthenticateStore}>
                     <PostInfo info={info} isPreview={true} IsAuthenticated={false}/>
                 </Provider>
             )
@@ -57,7 +82,6 @@ describe('test suit for PostInfo component', () => {
     })
 
     afterEach(() => {
-        store = null
         info = null
         wrapper = null
         instance = null
@@ -80,8 +104,8 @@ describe('test suit for PostInfo component', () => {
 
         let expectedType = "RESOLVE_USER_CREDENTIALS"
 
-        expect(store.dispatch).toHaveBeenCalledTimes(1)
-        expect(store.dispatch).toHaveBeenCalledWith({
+        expect(AuthenticatedStore.dispatch).toHaveBeenCalledTimes(1)
+        expect(AuthenticatedStore.dispatch).toHaveBeenCalledWith({
             type : expectedType,
             payload : expectedPayload
         })
@@ -92,7 +116,6 @@ describe('test suit for PostInfo component', () => {
 describe('test methods that call an api', () => {
 
     let info
-    let store
     let wrapper
     let instance
     let likeProps = { className : 'fa fa-thumbs-up inactive' }
@@ -112,19 +135,10 @@ describe('test methods that call an api', () => {
             uuid : 'asdasdmMMMMM'
         }
 
-        store = mockStore({
-            authenticated : true,
-            username : 'testinguser2',
-            profilePic : null,
-            userCommunities : [],
-            token : '23123123sadasd'
-        })
-
-        store.dispatch = jest.fn()
         //first we have to render component
         act(() => {
             wrapper = create(
-                <Provider store={store}>
+                <Provider store={AuthenticatedStore}>
                     <PostInfo info={info} isPreview={true} IsAuthenticated={true}/>
                 </Provider>
             )
@@ -139,7 +153,6 @@ describe('test methods that call an api', () => {
 
     afterEach(() => {
         info = null
-        store = null
         wrapper = null
         instance = null
     })
@@ -155,7 +168,6 @@ describe('test methods that call an api', () => {
 
 
 describe('test the dom', () => {
-    let store = null
     let wrapper = null
     let info = {
         date : "12 april 2020",
@@ -169,30 +181,15 @@ describe('test the dom', () => {
     }
 
     beforeEach(() => {
-        store = mockStore({
-            authenticated : false,
-            username : null,
-            userCommunities : null,
-            profilePic : null,
-            token : null,
-            posts : [],
-            previousPage : 0,
-            nextPage : 0,
-            fetchingPosts : {
-                success : null,
-                code : null 
-            }
-        })
 
         wrapper = render(
-            <Provider store={store}>
+            <Provider store={UnauthenticateStore}>
                 <PostInfo isPreview={false} IsAuthenticated={false} info={info}/>
             </Provider>
         )
     })
 
     afterEach(() => {
-        store = null
         wrapper = null
     })
 
