@@ -76,8 +76,6 @@ describe('test suit for PostInfo component', () => {
 
         act(() => {
             instance = wrapper.root
-            connectedComponent = instance.findByType(ConnectedPostInfo)
-            connectedComponent.findByProps(titleProps).props.onClick()
         })
     })
 
@@ -103,9 +101,10 @@ describe('test suit for PostInfo component', () => {
         }
 
         let expectedType = "RESOLVE_USER_CREDENTIALS"
-
-        expect(AuthenticatedStore.dispatch).toHaveBeenCalledTimes(1)
-        expect(AuthenticatedStore.dispatch).toHaveBeenCalledWith({
+        connectedComponent = instance.findByType(ConnectedPostInfo)
+        connectedComponent.findByProps(titleProps).props.onClick()
+        expect(UnauthenticateStore.dispatch).toHaveBeenCalledTimes(1)
+        expect(UnauthenticateStore.dispatch).toHaveBeenCalledWith({
             type : expectedType,
             payload : expectedPayload
         })
