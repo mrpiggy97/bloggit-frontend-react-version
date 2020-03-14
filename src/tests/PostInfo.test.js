@@ -194,5 +194,7 @@ describe('test the dom', () => {
 
     it('checks no problem arises with the dom', () => {
         expect(wrapper.getByText(info.owner.username)).toBeInTheDocument()
+        fireEvent.click(wrapper.getByText(info.owner.username))
+        expect(UnauthenticateStore.dispatch).toHaveBeenCalledTimes(1)
     })
 })
