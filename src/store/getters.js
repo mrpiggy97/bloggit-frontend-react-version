@@ -4,7 +4,7 @@ const mapStateToProps = (state) => {
 }
 
 export const mapAuthenticatedToProps = (state) => {
-    return { authenticated : state.authenticated}
+    return { authenticated : state.authenticated }
 }
 
 export default mapStateToProps
