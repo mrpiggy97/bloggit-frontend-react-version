@@ -13,7 +13,9 @@ export function ConnectedComment(props){
         if(info.liked || !isAuthenticated){
             return null
         }
-        let newState = { ...info, likes : info.likes++, liked : true }
+        let newState = { ...info }
+        newState.likes++
+        newState.liked = true
         setInfo(newState)
     }
 
@@ -75,11 +77,11 @@ export function ConnectedComment(props){
                 <div className="comment-footer">
                     {isAuthenticated  
                         ?   info.liked
-                                ?   <span className="like-active">likee</span>
+                                ?   <span className="like-active">like</span>
                                 :   <span className="like-inactive" onClick={like}>like</span>
                         : <span className="like-inactive">like</span>
                     }
-                    <span className="comment-likes">{info.likes} {JSON.stringify(isAuthenticated)}</span>
+                    <span className="comment-likes">{info.likes}</span>
                     {isAuthenticated
                         ?   info.reported
                                 ?   null
