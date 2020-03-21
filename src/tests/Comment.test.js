@@ -78,5 +78,7 @@ describe('test render with authenticated user', () => {
         )
 
         expect(wrapper2.getByText("like")).toBeInTheDocument()
+        fireEvent.click(wrapper2.getByText("like"))
+        expect(wrapper2.getByText("2")).toBeInTheDocument()
     })
 })
