@@ -1,4 +1,5 @@
-import updatePosts from 'store/utils/updatePosts'
+import updatePosts from './utils/updatePosts'
+import updateCommunityPosts from './utils/updateCommunityPosts'
 
 
 //these are the actions
@@ -10,7 +11,14 @@ const actions = {
     //these is an async action
     updatePosts(page){
         return { type : "UPDATE_POSTS", payload : updatePosts(page) }
-    }    
+    },
+
+    updateCommunityPosts(page, community){
+        return {
+            type : "UPDATE_COMMUNITY_POSTS",
+            payload : updateCommunityPosts(page, community)
+        }
+    }
 }
 
 
