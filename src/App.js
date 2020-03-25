@@ -19,9 +19,7 @@ function App() {
 
         <div id="app-views">
           <Switch>
-            <Route exact path="/">
-              <HomeView></HomeView>
-            </Route>
+            <Route exact path="/:id" render={(props) => <HomeView {...props} hello={"hola"}/>}/>
           </Switch>
         </div>
 
