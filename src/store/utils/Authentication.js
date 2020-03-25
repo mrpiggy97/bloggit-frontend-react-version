@@ -10,6 +10,14 @@ class Authentication{
         window.localStorage.removeItem('bloggit_username')
         window.localStorage.removeItem('bloggit_profile_pic')
         window.localStorage.removeItem('bloggit_user_communities')
+        //should only return an object containing null user credentials
+        this.newState = {
+            username : null,
+            userCommunities : null,
+            profilePic : null,
+        }
+
+        return this.newState
     }
 
     removeUserCredentials(){
@@ -27,7 +35,7 @@ class Authentication{
             token : null
         }
 
-        return Object.assign({}, this.prevState, this.newState)
+        return { ...this.prevState, ...this.newState }
     }
 
     setUserCredentials(){
@@ -43,7 +51,7 @@ class Authentication{
             userCommunities : this.payload.communities
         }
 
-        return Object.assign({}, this.prevState, this.newState)
+        return { ...this.prevState, ...this.newState }
     }
 
     setAuthenticationState(){
