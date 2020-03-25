@@ -12,41 +12,51 @@ const initialState = {
     fetchingStatus : {
         success : null,
         code : null
-    }
+    },
+    query : ""
 }
 
 //reducers are in essence getters for the app
 const rootReducer = (state = initialState, { type, payload }) => {
 
-    if(type === "RESOLVE_USER_CREDENTIALS"){
-        let auth = new Authentication(state, payload)
-        return auth.setAuthenticationState()
-    }
+    switch(type){
+        case "RESOLVE_USER_CREDENTIALS":
+            let auth = new Authentication(state, payload)
+            //this methods just returns an object copy of state with
+            //payload
+            return auth.setAuthenticationState()
 
-    else if(type === "UPDATE_POSTS_PENDING"){
-        //payload is supposed to be a url containing a page number to get that
-        //page posts.
-        //If user token has expired updatePosts will also remove said token,
-        //in the same way auth.setAuthenticated would
-        return Object.assign({}, state, { fetchingPosts : true} )
-    }
+        case "UPDATE_POSTS_PENDING":
+            return { ...state, fetchingPosts : true }
 
-    else if(type === "UPDATE_POSTS_FULFILLED"){
-        if(payload.authenticated !== state.authenticated){
-            Authentication.removeUserItemsFromStorage()
-            payload.username = null
-            payload.token = null
-            payload.userCommunities = null
-            payload.profilePic = null
-        }
-        return Object.assign({}, state, payload)
-    }
+        case "UPDATE_POSTS_FULLFILLED":
+            if(payload.authenticated !== state.authenticated){
+                let userPayload = Authentication.removeUserItemsFromStorage()
+                return { ...state, ...payload, ...userPayload }
+            }
 
-    else if(type === "UPDATE_POSTS_FAILED"){
-        return Object.assign({}, state, payload)
-    }
+            return { ...state, ...payload }
 
-    return state
+        case "UPDATE_POSTS_FAILED":
+            return { ...state, ...payload }
+        
+        case "UPDATE_COMMUNITY_POSTS_PENDING":
+            return { ...state, fetchingPosts : true }
+        
+        case "UPDATE_COMMUNITY_POSTS_FULLFILLED":
+            if(payload.authenticated !== state.authenticated){
+                let userPayload = Authentication.removeUserItemsFromStorage()
+                return { ...state, ...payload, ...userPayload }
+            }
+
+            return { ...state, ...payload }
+        
+        case "UPDATE_COMMUNITY_POSTS_FAILED":
+            return { ...state, ...payload }
+
+        default:
+            return state
+    }
 }
 
 export default rootReducer
