@@ -1,16 +1,22 @@
 import React from 'react';
 import {
-  BrowserRouter as Router,
   Switch,
   Route,
+  Router
 } from "react-router-dom";
 
-import HomeView from './views/HomeView'
+import { createBrowserHistory } from 'history'
+
+import HomeView from 'views/HomeView'
+import postsByCommunity from 'views/PostsByCommunity'
+
 import './App.css';
+
+export const customHistory = createBrowserHistory()
 
 function App() {
   return(
-    <Router>
+    <Router history={customHistory}>
       <div id="app">
 
         <div id="app-header">
@@ -20,6 +26,9 @@ function App() {
         <div id="app-views">
           <Switch>
             <Route exact path="/:id" render={(props) => <HomeView {...props} hello={"hola"}/>}/>
+            <Route path="/posts/:community"
+            render={(props) => <PostsByCommunity {...props }/>} 
+            />
           </Switch>
         </div>
 
