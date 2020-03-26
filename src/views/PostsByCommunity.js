@@ -109,10 +109,11 @@ ConnectedPostsByCommunity.propTypes = {
     previousPage : PropTypes.number.isRequired,
     fetchingPosts : PropTypes.bool.isRequired,
     fetchingStatus : PropTypes.object.isRequired,
-    updateCommunityPosts : PropTypes.func.isRequired
+    updateCommunityPosts : PropTypes.func.isRequired,
+    match : PropTypes.object.isRequired
 }
 
-const postsByCommunity = connect(mapStoreToProps, mapUpdateCommunityPostsToProps)
+const PostsByCommunity = connect(mapStoreToProps, mapUpdateCommunityPostsToProps)
                                 (ConnectedPostsByCommunity)
 
-export default postsByCommunity
+export default PostsByCommunity
