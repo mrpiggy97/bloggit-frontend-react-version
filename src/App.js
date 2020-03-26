@@ -25,9 +25,9 @@ function App() {
 
         <div id="app-views">
           <Switch>
-            <Route exact path="/:id" render={(props) => <HomeView {...props} hello={"hola"}/>}/>
-            <Route path="/posts/:community"
-            render={(props) => <PostsByCommunity {...props }/>} 
+            <Route  exact path="/:id" render={(props) => <HomeView {...props} hello={"hola"}/>}/>
+            <Route  path="/posts/:community"
+                    render={(props) => <PostsByCommunity {...props }/>} 
             />
           </Switch>
         </div>
