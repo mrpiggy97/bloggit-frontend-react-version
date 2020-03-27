@@ -88,12 +88,13 @@ export class ConnectedHomeView extends React.Component{
     }
 }
 
-ConnectedHomeView.propsTypes = {
+ConnectedHomeView.propTypes = {
     authenticated : PropTypes.bool.isRequired,
     updatePosts : PropTypes.func.isRequired,
     posts : PropTypes.array.isRequired,
     nextPage : PropTypes.number,
-    previousPage : PropTypes.number
+    previousPage : PropTypes.number,
+    match : PropTypes.object.isRequired
 }
 
 const HomeView = connect(mapStoreToProps, mapUpdatePostsToProps)(ConnectedHomeView)
