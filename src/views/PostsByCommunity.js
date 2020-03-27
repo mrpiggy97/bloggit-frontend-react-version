@@ -36,7 +36,7 @@ export class ConnectedPostsByCommunity extends React.Component{
     }
 
     updatePosts(page){
-        this.props.updateCommunityPosts(page, this.community)
+        this.props.updateCommunityPosts(page, this.state.community)
     }
 
     getNextPagePosts(){
@@ -54,7 +54,7 @@ export class ConnectedPostsByCommunity extends React.Component{
     }
 
     componentDidMount(){
-        this.updatePosts(1)//initial page
+        this.updatePosts(1)
     }
 
     componentDidUpdate(prevProps){
@@ -67,6 +67,12 @@ export class ConnectedPostsByCommunity extends React.Component{
                 fetchingPosts : this.props.fetchingPosts,
                 fetchingStatus : this.props.fetchingStatus
             })
+
+            if(prevProps.match.params.community !== this.props.match.params.community){
+                this.setState({
+                    community : this.props.match.params.community
+                })
+            }
         }
     }
 
@@ -104,7 +110,7 @@ export class ConnectedPostsByCommunity extends React.Component{
 
 ConnectedPostsByCommunity.propTypes = {
     authenticated : PropTypes.bool.isRequired,
-    posts : PropTypes.object.isRequired,
+    posts : PropTypes.array.isRequired,
     nextPage : PropTypes.number.isRequired,
     previousPage : PropTypes.number.isRequired,
     fetchingPosts : PropTypes.bool.isRequired,
