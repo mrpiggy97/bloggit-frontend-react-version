@@ -3,6 +3,7 @@ import promise from 'redux-promise-middleware'
 import configStore from 'redux-mock-store'
 import { render, fireEvent } from '@testing-library/react'
 import { Provider } from 'react-redux'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 
 
 import HomeView from 'views/HomeView'
@@ -51,10 +52,12 @@ describe('initial test for HomeView view', () => {
     store2.dispatch = jest.fn()
 
     it('checks that view has been mounted correctly', () => {
-
+        let his = {}
         let wrapper = render(
             <Provider store={store}>
-                <HomeView/>
+                <Router>
+                    <Route render={(props) => <HomeView {...props}/>} />                    
+                </Router>
             </Provider>
         )
 
@@ -66,7 +69,9 @@ describe('initial test for HomeView view', () => {
 
         let wrapper = render(
             <Provider store={store2}>
-                <HomeView/>
+                <Router>
+                    <Route render={(props) => <HomeView {...props} />} />
+                </Router>
             </Provider>
         )
         expect(wrapper.getByText('next page')).toBeInTheDocument()
