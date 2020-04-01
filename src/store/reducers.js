@@ -29,7 +29,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
         case "UPDATE_POSTS_PENDING":
             return { ...state, fetchingPosts : true }
 
-        case "UPDATE_POSTS_FULLFILLED":
+        case "UPDATE_POSTS_FULFILLED":
             if(payload.authenticated !== state.authenticated){
                 let userPayload = Authentication.removeUserItemsFromStorage()
                 return { ...state, ...payload, ...userPayload }
@@ -43,7 +43,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
         case "UPDATE_COMMUNITY_POSTS_PENDING":
             return { ...state, fetchingPosts : true }
         
-        case "UPDATE_COMMUNITY_POSTS_FULLFILLED":
+        case "UPDATE_COMMUNITY_POSTS_FULFILLED":
             if(payload.authenticated !== state.authenticated){
                 let userPayload = Authentication.removeUserItemsFromStorage()
                 return { ...state, ...payload, ...userPayload }
