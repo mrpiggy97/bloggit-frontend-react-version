@@ -1,9 +1,10 @@
 //import getPosts from 'services/PostServices/getPosts'
 import getPosts from 'services/PostServices/__mocks__/getPosts'
+import getPosts2 from 'services/PostServices/__mocks__/getPosts2'
 
 const updatePosts = async (page) => {
     try {
-        let response = await getPosts(page)
+        let response = await getPosts2(page)
         let newState = {
             posts : response.data.results,
             nextPage : response.data.next_page,
@@ -14,19 +15,20 @@ const updatePosts = async (page) => {
                 status : response.status
             }
         }
-
-        return newState
+        return Promise.resolve(newState)
     }
     
     catch (error) {
         console.log(error)
         console.log("error ocurred in HomeViewGetPage")
-        return {
+        let newState  ={
             fetchingStatus : {
                 success : false,
                 status : error.request.status
             }
         }
+
+        return Promise.resolve(newState)
     }
 }
 
