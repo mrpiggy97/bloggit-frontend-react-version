@@ -157,6 +157,7 @@ export class ConnectedPostInfo extends React.Component{
                                     report
                                 </span> : null
                             }
+                            <span>{this.state.uuid}</span>
                         </div>
                     }
                 </div>
