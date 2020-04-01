@@ -98,3 +98,52 @@ export let page3 = {
     count : 2,
     authenticated : false,
 }
+
+let fakePost = {
+    owner : { username : 'fakeuser14234', profilePic : null },
+    date : "12 april 2020",
+    title : "this is the title",
+    text : "this is the text",
+    communities : ["test"],
+    likes : 1,
+    liked : null,
+    reported : null,
+    uuid : null
+}
+
+let fakePage1, fakePage2, fakePage3 = null
+
+function fillPage(start, limit) {
+    //fill results with 20 versions of the same post
+    if(start < 0 || limit > 100){
+        return null
+    }
+
+    let results = []
+    for(let i=start; i < limit; i++){
+        let post = { ...fakePost, uuid : i }
+        results.push(post)
+    }
+
+    let page = {
+        results : results,
+        count : results.length,
+    }
+
+    return page
+}
+
+fakePage1 = fillPage(0, 10)
+fakePage2 = fillPage(0, 10)
+fakePage3 = fillPage(0, 10)
+
+fakePage1.next_page = 2
+fakePage1.previous_page = null
+
+fakePage2.next_page = 3
+fakePage2.previous_page = 1
+
+fakePage3.next_page = null
+fakePage3.previous_page = 2
+
+export { fakePage1, fakePage2, fakePage3 }
