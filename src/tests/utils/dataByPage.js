@@ -113,15 +113,15 @@ let fakePost = {
 
 let fakePage1, fakePage2, fakePage3 = null
 
-function fillPage(start, limit) {
+function fillPage(start, limit, id) {
     //fill results with 20 versions of the same post
-    if(start < 0 || limit > 100){
+    if(start < 0 || limit > 100 || id === null){
         return null
     }
 
     let results = []
     for(let i=start; i < limit; i++){
-        let post = { ...fakePost, uuid : i }
+        let post = { ...fakePost, uuid : i + id }
         results.push(post)
     }
 
@@ -133,9 +133,9 @@ function fillPage(start, limit) {
     return page
 }
 
-fakePage1 = fillPage(0, 10)
-fakePage2 = fillPage(0, 10)
-fakePage3 = fillPage(0, 10)
+fakePage1 = fillPage(0, 10, 2)
+fakePage2 = fillPage(0, 10, 44)
+fakePage3 = fillPage(0, 10, 5)
 
 fakePage1.next_page = 2
 fakePage1.previous_page = null
