@@ -1,8 +1,8 @@
 import { fakePost, fillPage } from 'tests/utils/dataByPage'
 
-let fakePost1 = { ...fakePost, communities : ["test1"]}
-let fakePost2 = { ...fakePost, communities : ["test2"]}
-let fakePost3 = { ...fakePost, communities : ["test3"]}
+let fakePost1 = { ...fakePost, communities : ["test1"] }
+let fakePost2 = { ...fakePost, communities : ["test2"] }
+let fakePost3 = { ...fakePost, communities : ["test3"] }
 
 
 function fillPageByCommunity(community){
