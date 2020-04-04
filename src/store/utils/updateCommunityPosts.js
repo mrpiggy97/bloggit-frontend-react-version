@@ -1,10 +1,13 @@
 import getPostsByCommunity from 'services/PostServices/getPostsByCommunity'
+import fakePostsByCommunity from 'services/PostServices/__mocks__/fakePostsByCommunity'
+
+const realAPI = process.env.REACT_APP_MODE === "dev" ? fakePostsByCommunity : getPostsByCommunity
 
 const updateCommunityPosts = async (page, community) => {
     let response
     let newState
     try {
-        response = await getPostsByCommunity(page, community)
+        response = await realAPI(page, community)
         newState = {
             posts : response.data.posts,
             nextPage : response.data.nextPage,

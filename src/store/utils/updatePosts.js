@@ -1,10 +1,11 @@
-//import getPosts from 'services/PostServices/getPosts'
-import getPosts from 'services/PostServices/__mocks__/getPosts'
+import getPosts from 'services/PostServices/getPosts'
 import getPosts2 from 'services/PostServices/__mocks__/getPosts2'
+
+const realAPI = process.env.REACT_APP_MODE === "dev" ? getPosts2 : getPosts
 
 const updatePosts = async (page) => {
     try {
-        let response = await getPosts2(page)
+        let response = await realAPI(page)
         let newState = {
             posts : response.data.results,
             nextPage : response.data.next_page,
