@@ -7,43 +7,17 @@ import promise from 'redux-mock-store'
 import { BrowserRouter, Route } from 'react-router-dom'
 
 import PostInfo, { ConnectedPostInfo } from 'components/PostInfo'
-import { unauthenticatedStore } from './utils/storeMocks'
+import { unauthenticatedStore, authenticatedStore } from './utils/storeMocks'
 
 const mockStore = configStore([promise])
 jest.mock("services/PostServices/likePost")
 jest.mock("services/PostServices/reportPost")
 
-const UnauthenticateStore = mockStore({
-    authenticated : false,
-    token : null,
-    username : null,
-    userCommunities : null,
-    profilePic : null,
-    posts : [],
-    nextPage : 0,
-    previousPage : 0,
-    fetchingPosts : {
-        success : null,
-        code : null
-    }
-})
+const UnauthenticateStore = mockStore(unauthenticatedStore)
 
 UnauthenticateStore.dispatch = jest.fn()
 
-const AuthenticatedStore = mockStore({
-    authenticated : true,
-    username : 'testinguser2',
-    profilePic : null,
-    userCommunities : [],
-    posts : [],
-    token : '23123123sadasd',
-    nextPage : 0,
-    previousPage : 0,
-    fetchingPosts : {
-        success : true,
-        code : 200,
-    }
-})
+const AuthenticatedStore = mockStore(authenticatedStore)
 
 AuthenticatedStore.dispatch = jest.fn()
 
