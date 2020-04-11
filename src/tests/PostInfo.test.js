@@ -4,8 +4,10 @@ import { Provider } from 'react-redux'
 import { render, fireEvent } from '@testing-library/react'
 import configStore from 'redux-mock-store'
 import promise from 'redux-mock-store'
+import { BrowserRouter, Route } from 'react-router-dom'
 
 import PostInfo, { ConnectedPostInfo } from 'components/PostInfo'
+import { unauthenticatedStore } from './utils/storeMocks'
 
 const mockStore = configStore([promise])
 jest.mock("services/PostServices/likePost")
@@ -69,7 +71,12 @@ describe('test suit for PostInfo component', () => {
         act(() => {
             wrapper = create(
                 <Provider store={UnauthenticateStore}>
-                    <PostInfo info={info} isPreview={true} IsAuthenticated={false}/>
+                    <BrowserRouter>
+                        <Route render={(props) => {
+                            return <PostInfo {...props} info={info} isPreview={true}
+                                    IsAuthenticated={unauthenticatedStore.authenticated} />
+                        }}/>
+                    </BrowserRouter>
                 </Provider>
             )
         })
@@ -138,7 +145,12 @@ describe('test methods that call an api', () => {
         act(() => {
             wrapper = create(
                 <Provider store={AuthenticatedStore}>
-                    <PostInfo info={info} isPreview={true} IsAuthenticated={true}/>
+                    <BrowserRouter>
+                        <Route render={(props) => {
+                            return <PostInfo {...props} info={info} isPreview={true}
+                                    IsAuthenticated={true} />
+                        }} />
+                    </BrowserRouter>
                 </Provider>
             )
         })
@@ -183,7 +195,12 @@ describe('test the dom', () => {
 
         wrapper = render(
             <Provider store={UnauthenticateStore}>
-                <PostInfo isPreview={false} IsAuthenticated={false} info={info}/>
+                <BrowserRouter>
+                    <Route render={(props) => {
+                        return <PostInfo {...props} info={info} isPreview={false}
+                                IsAuthenticated={unauthenticatedStore.authenticated}/>
+                    }} />
+                </BrowserRouter>
             </Provider>
         )
     })
