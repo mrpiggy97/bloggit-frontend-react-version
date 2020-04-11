@@ -130,7 +130,8 @@ function fillPage(numberOfFakedPosts, nextPage, previousPage, id, fakedPost) {
         results : results,
         count : results.length,
         next_page : nextPage,
-        previous_page : previousPage
+        previous_page : previousPage,
+        authenticated : window.localStorage.getItem('bloggit_token') ? true : false
     }
 
     return page
