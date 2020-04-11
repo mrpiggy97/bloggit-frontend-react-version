@@ -31,6 +31,7 @@ export class ConnectedPostInfo extends React.Component{
         this.like = this.like.bind(this)
         this.report = this.report.bind(this)
         this.fakeAuthentication = this.fakeAuthentication.bind(this)
+        this.redirectToCommunity = this.redirectToCommunity.bind(this)
     }
 
     fakeLike(){
@@ -43,6 +44,10 @@ export class ConnectedPostInfo extends React.Component{
         this.setState((prevState) => {
             return { reported : prevState.reported ? false : true }
         })
+    }
+
+    redirectToCommunity(){
+        this.props.history.push(`/posts/${this.state.communities[0]}`)
     }
 
     async like(){
@@ -129,7 +134,9 @@ export class ConnectedPostInfo extends React.Component{
 
                     <div className="communities">
                         {this.state.communities.map(com => {
-                            return <span className="community" key={com}>c/{com}</span>
+                            return  <span className="community" key={com} onClick={this.redirectToCommunity}>
+                                        c/{com}
+                                    </span>
                         })}
                     </div>
 
@@ -170,7 +177,8 @@ ConnectedPostInfo.propTypes = {
     info : PropTypes.object.isRequired,
     isPreview : PropTypes.bool.isRequired,
     IsAuthenticated : PropTypes.bool.isRequired,
-    resolveUserCredentials : PropTypes.func.isRequired
+    resolveUserCredentials : PropTypes.func.isRequired,
+    history : PropTypes.object.isRequired
 }
 
 const PostInfo = connect(null, mapResolveUserCredentialsToProps)
