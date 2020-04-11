@@ -9,7 +9,7 @@ const updateCommunityPosts = async (page, community) => {
     try {
         response = await realAPI(page, community)
         newState = {
-            posts : response.data.posts,
+            posts : response.data.results,
             nextPage : response.data.nextPage,
             previousPage : response.data.previousPage,
             authenticated : response.data.authenticated,
@@ -33,7 +33,6 @@ const updateCommunityPosts = async (page, community) => {
             fetchingPosts : false
         }
     }
-
     return Promise.resolve(newState)
 }
 
