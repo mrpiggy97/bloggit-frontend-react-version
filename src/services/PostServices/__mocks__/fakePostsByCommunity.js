@@ -39,7 +39,7 @@ function fillPageByCommunity(community){
     return { page1, page2, page3 }
 }
 
-function getPostsByCommunity(page, community){
+function fakePostsByCommunity(page, community){
     let { page1, page2, page3 } = fillPageByCommunity(community)
     let currentPage
     switch(page){
@@ -58,11 +58,10 @@ function getPostsByCommunity(page, community){
         default:
             currentPage = page1
     }
-
     return Promise.resolve({
         data : currentPage,
         status : 200,
     })
 }
 
-export default getPostsByCommunity
+export default fakePostsByCommunity
