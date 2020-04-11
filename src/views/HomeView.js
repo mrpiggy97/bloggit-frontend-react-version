@@ -67,8 +67,13 @@ export class ConnectedHomeView extends React.Component{
             <div id="home-view">
                 <div className="posts">
                     {this.state.posts.map(post => {
-                        return <PostInfo info={post} isPreview={true} key={post.uuid}
-                                    IsAuthenticated={this.props.authenticated}/>
+                        return <PostInfo
+                                info={post}
+                                isPreview={true}
+                                key={post.uuid}
+                                IsAuthenticated={this.props.authenticated}
+                                history={this.props.history}
+                                />
                     })}          
                 </div>
                 <div className="pagination-arrows">
@@ -94,7 +99,7 @@ ConnectedHomeView.propTypes = {
     posts : PropTypes.array.isRequired,
     nextPage : PropTypes.number,
     previousPage : PropTypes.number,
-    match : PropTypes.object.isRequired
+    history : PropTypes.object.isRequired
 }
 
 const HomeView = connect(mapStoreToProps, mapUpdatePostsToProps)(ConnectedHomeView)
