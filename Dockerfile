@@ -9,5 +9,7 @@ ENV REACT_APP_MODE=production
 ADD . /code
 
 RUN npm install
+RUN npm install -g serve
+RUN npm build
 
-CMD ["npm", "start"]
+CMD [ "serve",  "-s", "build" ]
