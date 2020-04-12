@@ -22,7 +22,7 @@ export class ConnectedPostsByCommunity extends React.Component{
 
         this.state = {
             community : this.props.match.params.community,
-            isAuthenticated : this.props.authenticated,
+            authenticated : this.props.authenticated,
             posts : this.props.posts,
             nextPage : this.props.nextPage,
             previousPage : this.props.previousPage,
@@ -60,7 +60,7 @@ export class ConnectedPostsByCommunity extends React.Component{
     componentDidUpdate(prevProps){
         if(prevProps !== this.props){
             this.setState({
-                isAuthenticated : this.props.authenticated,
+                authenticated : this.props.authenticated,
                 posts : this.props.posts,
                 nextPage : this.props.nextPage,
                 previousPage : this.props.previousPage,
@@ -85,7 +85,9 @@ export class ConnectedPostsByCommunity extends React.Component{
                         return <PostInfo
                                 info={post}
                                 isPreview={true}
-                                isAuthenticated={this.state.isAuthenticated}
+                                IsAuthenticated={this.state.authenticated}
+                                history={this.props.history}
+                                key={post.uuid}
                                 />
                     })}
                 </div>
@@ -111,12 +113,13 @@ export class ConnectedPostsByCommunity extends React.Component{
 ConnectedPostsByCommunity.propTypes = {
     authenticated : PropTypes.bool.isRequired,
     posts : PropTypes.array.isRequired,
-    nextPage : PropTypes.number.isRequired,
-    previousPage : PropTypes.number.isRequired,
+    nextPage : PropTypes.number,
+    previousPage : PropTypes.number,
     fetchingPosts : PropTypes.bool.isRequired,
     fetchingStatus : PropTypes.object.isRequired,
     updateCommunityPosts : PropTypes.func.isRequired,
-    match : PropTypes.object.isRequired
+    match : PropTypes.object.isRequired,
+    history : PropTypes.object.isRequired
 }
 
 const PostsByCommunity = connect(mapStoreToProps, mapUpdateCommunityPostsToProps)
