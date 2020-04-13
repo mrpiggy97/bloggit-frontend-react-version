@@ -65,7 +65,7 @@ export class ConnectedHomeView extends React.Component{
     render(){
         return(
             <div id="home-view">
-                <div className="posts">
+                <div id="home-posts">
                     {this.state.posts.map(post => {
                         return <PostInfo
                                 info={post}
