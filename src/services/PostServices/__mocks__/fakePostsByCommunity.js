@@ -32,10 +32,6 @@ function fillPageByCommunity(community){
             page3 = null
     }
 
-    page1.community = community
-    page2.community = community
-    page3.community = community
-
     return { page1, page2, page3 }
 }
 
