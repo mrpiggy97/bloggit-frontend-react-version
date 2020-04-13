@@ -5,6 +5,8 @@ import PropTypes from 'prop-types'
 import { mapUpdateCommunityPostsToProps } from 'store/mapActions'
 import PostInfo from 'components/PostInfo'
 
+import "./css/PostsByCommunity.css"
+
 let mapStoreToProps = (state) => {
     return {
         authenticated : state.authenticated,
@@ -79,8 +81,10 @@ export class ConnectedPostsByCommunity extends React.Component{
     render(){
         return(
             <div id="posts-by-community">
-                <span className="community" >{this.state.community}</span>
-                <div className="posts">
+                <div id="community-slug">
+                    <span>{this.state.community}</span>
+                </div>
+                <div id="community-posts">
                     {this.state.posts.map(post => {
                         return <PostInfo
                                 info={post}
@@ -94,13 +98,13 @@ export class ConnectedPostsByCommunity extends React.Component{
                 <div className="arrows">
                     {this.state.previousPage
                         ?   <span className="previous-page active" onClick={this.getPreviousPagePosts}>
-                                previous
+                                previous page
                             </span>
                         :   <span className="previous-page inactive">previous</span>
                     }
                     {this.state.nextPage
                         ?   <span className="next-page active" onClick={this.getNextPagePosts}>
-                                next
+                                next page
                             </span>
                         :   <span className="next-page inactive">next</span>
                     }
