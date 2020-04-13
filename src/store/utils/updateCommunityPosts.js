@@ -10,8 +10,8 @@ const updateCommunityPosts = async (page, community) => {
         response = await realAPI(page, community)
         newState = {
             posts : response.data.results,
-            nextPage : response.data.nextPage,
-            previousPage : response.data.previousPage,
+            nextPage : response.data.next_page,
+            previousPage : response.data.previous_page,
             authenticated : response.data.authenticated,
             fetchingStatus : {
                 success : true,
