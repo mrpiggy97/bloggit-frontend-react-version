@@ -3,6 +3,7 @@ import { Switch, Route } from "react-router-dom";
 
 import HomeView from 'views/HomeView'
 import PostsByCommunity from 'views/PostsByCommunity'
+import PageNotFound from 'views/PageNotFound'
 
 import './App.css';
 
@@ -19,6 +20,7 @@ function App() {
             <Route  path="/posts/:community"
                     render={(props) => <PostsByCommunity {...props }/>} 
             />
+            <Route render={() => <PageNotFound/>} />
           </Switch>
         </div>
 
