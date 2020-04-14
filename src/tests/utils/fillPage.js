@@ -1,4 +1,10 @@
-export let page1 = {
+//while it seems redudant to have page1, page2 and page3 when fakePage1
+//fakePage2 and fakePage3 are available, these last pages only contain the same
+//posts all with the same title, text, likes owner ect, while page1, page2,
+//and page3 all have different title text and owner, this trying to tell which
+//which data we are supposed to see
+
+let page1 = {
     next_page : 2,
     previous_page : null,
     results : [
@@ -32,7 +38,7 @@ export let page1 = {
 }
 
 
-export let page2 = {
+let page2 = {
     next_page : 3,
     previous_page : 1,
     results : [
@@ -66,7 +72,7 @@ export let page2 = {
 }
 
 
-export let page3 = {
+let page3 = {
     next_page : null,
     previous_page : 2,
     results : [
@@ -141,4 +147,6 @@ fakePage1 = fillPage(10, 2, null, 3, fakePost)
 fakePage2 = fillPage(10, 3, 1, 44, fakePost)
 fakePage3 = fillPage(10, null, 2, 67, fakePost)
 
-export { fakePage1, fakePage2, fakePage3, fakePost, fillPage }
+export { fakePage1, fakePage2, fakePage3, fakePost, page1, page2, page3 }
+
+export default fillPage
