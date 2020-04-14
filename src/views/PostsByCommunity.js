@@ -106,7 +106,7 @@ export class ConnectedPostsByCommunity extends React.Component{
                         ?   <span className="next-page active" onClick={this.getNextPagePosts}>
                                 next page
                             </span>
-                        :   <span className="next-page inactive">next</span>
+                        :   <span className="next-page inactive">next page</span>
                     }
                 </div>
             </div>
