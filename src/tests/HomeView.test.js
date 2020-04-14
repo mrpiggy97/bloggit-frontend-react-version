@@ -1,13 +1,12 @@
 import React from 'react'
 import { render, fireEvent } from '@testing-library/react'
 import { Provider } from 'react-redux'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { Route, MemoryRouter } from 'react-router-dom'
 
 
 import HomeView from 'views/HomeView'
-import { page1 } from 'tests/utils/dataByPage'
-import { unauthenticatedStore } from 'tests/utils/storeMocks'
-import createStore from 'tests/utils/storeMocks'
+import { page1 } from 'tests/utils/fillPage'
+import createStore, { unauthenticatedStore } from 'tests/utils/storeMocks'
 
 describe('initial test for HomeView view', () => {
 
@@ -25,9 +24,9 @@ describe('initial test for HomeView view', () => {
     it('checks that view has been mounted correctly', () => {
         let wrapper = render(
             <Provider store={unauthenticatedMockedStore}>
-                <Router>
-                    <Route render={(props) => <HomeView {...props}/>} />                    
-                </Router>
+                <MemoryRouter initialEntries={["/"]}>
+                    <Route exact path="/" render={(props) => <HomeView {...props}/>} />                    
+                </MemoryRouter>
             </Provider>
         )
 
@@ -39,9 +38,9 @@ describe('initial test for HomeView view', () => {
 
         let wrapper = render(
             <Provider store={mockedStoreWithPosts}>
-                <Router>
-                    <Route render={(props) => <HomeView {...props} />} />
-                </Router>
+                <MemoryRouter initialEntries={["/"]}>
+                    <Route exact path="/" render={(props) => <HomeView {...props} />} />
+                </MemoryRouter>
             </Provider>
         )
 
