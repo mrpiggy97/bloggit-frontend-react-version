@@ -4,6 +4,8 @@ let fakePost1 = { ...fakePost, communities : ["test1"] }
 let fakePost2 = { ...fakePost, communities : ["test2"] }
 let fakePost3 = { ...fakePost, communities : ["test3"] }
 
+//give out three pages according to community, each with 10 posts and a different
+//uuid
 function fillPageByCommunity(community){
     let page1, page2, page3
     switch(community){
