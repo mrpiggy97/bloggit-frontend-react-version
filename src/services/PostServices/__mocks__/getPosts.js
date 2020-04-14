@@ -1,4 +1,4 @@
-import { page1, page2, page3 } from 'tests/utils/dataByPage'
+import { page1, page2, page3 } from 'tests/utils/fillPage'
 
 const getPosts = (page) => {
     let currentPage

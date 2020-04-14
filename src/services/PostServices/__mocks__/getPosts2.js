@@ -1,4 +1,4 @@
-import { fakePage1, fakePage2, fakePage3 } from 'tests/utils/dataByPage'
+import { fakePage1, fakePage2, fakePage3 } from 'tests/utils/fillPage'
 
 function getPosts2(page){
     let currentPage
