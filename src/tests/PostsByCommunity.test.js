@@ -6,6 +6,8 @@ import { Provider } from 'react-redux'
 import createStore, { authenticatedStore, unauthenticatedStore } from 'tests/utils/storeMocks'
 
 import PostByCommunity from 'views/PostsByCommunity'
+
+
 const AuthenticatedMockedStore = createStore({ ...authenticatedStore })
 const UnAuthenticatedMockedStore = createStore({ ...unauthenticatedStore })
 
