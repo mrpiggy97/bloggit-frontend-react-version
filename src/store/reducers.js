@@ -11,7 +11,7 @@ const initialState = {
     fetchingPosts : false,
     fetchingStatus : {
         success : null,
-        code : null
+        error : null
     },
     query : ""
 }

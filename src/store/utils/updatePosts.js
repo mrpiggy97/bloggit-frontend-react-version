@@ -25,7 +25,7 @@ const updatePosts = async (page) => {
         let newState  ={
             fetchingStatus : {
                 success : false,
-                status : error.request.status
+                error : error
             }
         }
 

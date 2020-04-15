@@ -6,6 +6,7 @@ const realAPI = process.env.REACT_APP_MODE === "dev" ? fakePostsByCommunity : ge
 const updateCommunityPosts = async (page, community) => {
     let response
     let newState
+    let mockedErrorCode = 404 // since this means url was not found
     try {
         response = await realAPI(page, community)
         newState = {
@@ -27,7 +28,7 @@ const updateCommunityPosts = async (page, community) => {
         newState = {
             fetchingStatus : {
                 success : false,
-                code : error.request.status
+                error : error
             },
 
             fetchingPosts : false
