@@ -16,7 +16,7 @@ const updateCommunityPosts = async (page, community) => {
             authenticated : response.data.authenticated,
             fetchingStatus : {
                 success : true,
-                code : response.data.status
+                error : null
             },
             fetchingPosts : false
         }    
