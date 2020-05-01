@@ -10,21 +10,21 @@ function fillPageByCommunity(community){
     let page1, page2, page3
     switch(community){
         case "test1":
-            page1 = fillPage(10, 2, null, 23, fakePost1)
-            page2 = fillPage(10, 3, 1, 7, fakePost1)
-            page3 = fillPage(10, null, 2, 51, fakePost1)
+            page1 = fillPage(2, null, 23, fakePost1)
+            page2 = fillPage(3, 1, 7, fakePost1)
+            page3 = fillPage(null, 2, 51, fakePost1)
         break
 
         case "test2":
-            page1 = fillPage(10, 2, null, 43, fakePost2)
-            page2 = fillPage(10, 3,  1, 1, fakePost2)
-            page3 = fillPage(10, null, 2, 19, fakePost2)
+            page1 = fillPage(2, null, 43, fakePost2)
+            page2 = fillPage(3,  1, 1, fakePost2)
+            page3 = fillPage(null, 2, 19, fakePost2)
         break
 
         case "test3":
-            page1 = fillPage(10, 2, null, 67, fakePost3)
-            page2 = fillPage(10, 3, 1, 6, fakePost3)
-            page3 = fillPage(10, null, 2, 87, fakePost3)
+            page1 = fillPage(2, null, 67, fakePost3)
+            page2 = fillPage(3, 1, 6, fakePost3)
+            page3 = fillPage(null, 2, 87, fakePost3)
         break
 
         default:
