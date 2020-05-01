@@ -119,15 +119,12 @@ let fakePost = {
 
 let fakePage1, fakePage2, fakePage3 = null
 
-function fillPage(numberOfFakedPosts, nextPage, previousPage, id, fakedPost) {
-    //fill results with 20 versions of the same post, this is exactly the
+function fillPage(nextPage, previousPage, id, fakedPost) {
+    //fill results with 5 versions of the same post, this is exactly the
     //data the api would give us
-    if(numberOfFakedPosts === null || id === null || fakedPost === null){
-        return null
-    }
 
     let results = []
-    for(let i=0; i < numberOfFakedPosts; i++){
+    for(let i=0; i < 5; i++){
         let post = { ...fakedPost, uuid : i + id }
         results.push(post)
     }
@@ -143,9 +140,9 @@ function fillPage(numberOfFakedPosts, nextPage, previousPage, id, fakedPost) {
     return page
 }
 
-fakePage1 = fillPage(10, 2, null, 3, fakePost)
-fakePage2 = fillPage(10, 3, 1, 44, fakePost)
-fakePage3 = fillPage(10, null, 2, 67, fakePost)
+fakePage1 = fillPage(2, null, 3, fakePost)
+fakePage2 = fillPage(3, 1, 44, fakePost)
+fakePage3 = fillPage(null, 2, 67, fakePost)
 
 export { fakePage1, fakePage2, fakePage3, fakePost, page1, page2, page3 }
 
