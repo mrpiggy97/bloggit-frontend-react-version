@@ -13,7 +13,6 @@ const updatePosts = async (page) => {
             authenticated : response.data.authenticated,
             fetchingStatus : {
                 success : true,
-                error : null
             }
         }
         return Promise.resolve(newState)
@@ -25,7 +24,6 @@ const updatePosts = async (page) => {
         let newState  ={
             fetchingStatus : {
                 success : false,
-                error : error
             }
         }
 
