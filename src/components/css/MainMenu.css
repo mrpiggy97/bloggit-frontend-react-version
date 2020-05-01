@@ -1,0 +1,42 @@
+div#main-menu{
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    grid-template-rows: 1fr;
+    grid-template-areas: "home user";
+    justify-content: stretch;
+    align-content: stretch;
+    border-style: gold;
+    border-width: 2px;
+}
+/* home section*/
+div#home{
+    display: grid;
+    grid-area: home;
+    grid-template-columns: 1fr 5fr 3fr;
+    justify-items: center;
+    align-items: center;
+}
+
+form#search-posts{
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    grid-template-rows: 1fr;
+    justify-self: stretch;
+    justify-items: stretch;
+    align-items: center;
+}
+
+button#search-posts{
+    min-height: 100%;
+    max-height: 100%;
+}
+/*home section*/
+
+div#user{
+    display: grid;
+    grid-area: user;
+    grid-template-columns: repeat(2, 1fr);
+    justify-items: left;
+    align-items: center;
+}
+
