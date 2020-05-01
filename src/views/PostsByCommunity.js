@@ -2,21 +2,14 @@ import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
-import { mapUpdateCommunityPostsToProps } from 'store/mapActions'
+import MapActions from 'store/MapActions'
+import { MapState } from 'store/getters'
 import PostInfo from 'components/PostInfo'
 
 import "./css/PostsByCommunity.css"
 
-let mapStoreToProps = (state) => {
-    return {
-        authenticated : state.authenticated,
-        posts : state.posts,
-        nextPage : state.nextPage,
-        previousPage : state.previousPage,
-        fetchingStatus : state.fetchingStatus,
-        fetchingPosts : state.fetchingPosts
-    }
-}
+let actionMapper = new MapActions()
+let stateMapper = new MapState() 
 
 export class ConnectedPostsByCommunity extends React.Component{
     constructor(props){
@@ -126,7 +119,8 @@ ConnectedPostsByCommunity.propTypes = {
     history : PropTypes.object.isRequired
 }
 
-const PostsByCommunity = connect(mapStoreToProps, mapUpdateCommunityPostsToProps)
+const PostsByCommunity = connect(stateMapper.PostsByCommunityStateToProps,
+                                actionMapper.PostsByCommunityActionsToProps)
                                 (ConnectedPostsByCommunity)
 
 export default PostsByCommunity

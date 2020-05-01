@@ -3,18 +3,12 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
 import PostInfo from '../components/PostInfo'
-import {  mapUpdatePostsToProps } from 'store/mapActions'
+import MapActions from 'store/MapActions'
+import { MapState } from 'store/getters'
 import './css/HomeView.css'
 
-const mapStoreToProps = (state) => {
-    return {
-        authenticated : state.authenticated,
-        posts : state.posts,
-        nextPage : state.nextPage,
-        previousPage : state.previousPage
-    }
-
-}
+let actionMapper = new MapActions()
+let stateMapper = new MapState()
 
 export class ConnectedHomeView extends React.Component{
     constructor(props){
@@ -102,6 +96,7 @@ ConnectedHomeView.propTypes = {
     history : PropTypes.object.isRequired
 }
 
-const HomeView = connect(mapStoreToProps, mapUpdatePostsToProps)(ConnectedHomeView)
+const HomeView = connect(stateMapper.HomeViewStateToProps, actionMapper.HomeViewActionsToProps)
+                        (ConnectedHomeView)
 
 export default HomeView
