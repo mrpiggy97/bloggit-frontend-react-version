@@ -2,13 +2,15 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import './css/PostInfo.css'
 import { connect } from 'react-redux'
-import { mapResolveUserCredentialsToProps } from '../store/mapActions'
+import MapActions from '../store/MapActions'
 
 import likePost from '../services/PostServices/likePost.js'
 import reportPost from '../services/PostServices/reportPost.js'
 
 //Note: the first argument for connect must be null when mapStateToProps is
 //absent
+
+let actionMapper = new MapActions()
 
 export class ConnectedPostInfo extends React.Component{
     constructor(props){
@@ -153,6 +155,7 @@ export class ConnectedPostInfo extends React.Component{
                                 </span>
                                 : null
                             }
+                            <span>{this.state.uuid}</span>
                         </div> :
 
                         <div className="interaction">
@@ -181,7 +184,7 @@ ConnectedPostInfo.propTypes = {
     history : PropTypes.object.isRequired
 }
 
-const PostInfo = connect(null, mapResolveUserCredentialsToProps)
+const PostInfo = connect(null, actionMapper.PostInfoActionsToProps)
                         (ConnectedPostInfo)
 
 export default PostInfo
