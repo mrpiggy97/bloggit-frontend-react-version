@@ -5,6 +5,8 @@ import { useHistory } from 'react-router-dom'
 import { MapState } from 'store/getters'
 import MapActions from 'store/MapActions'
 
+import "./css/MainMenu.css"
+
 let stateMapper = new MapState()
 let actionMapper = new MapActions()
 
@@ -57,16 +59,18 @@ function ConnectedMainMenu(props){
         <div id="main-menu">
             <div id="home">
                 <span className="go-home" onClick={goToHome}>home</span>
-                <input type="text" className="search-posts" onChange={updateQuery}></input>
-                <span onClick={searchPosts}>search</span>
+                <form id="search-posts">
+                    <input type="text" onChange={updateQuery}/>
+                    <button type="submit" id="search-posts">search</button>
+                </form>
                 <span>communities</span>
             </div>
             {IsAuthenticated ?
-                <div id="user-related-links">
+                <div id="user">
                     <span>{username}</span>
                     <span onClick={logout} >logout</span>
                 </div> :
-                <div id="user-related-links">
+                <div id="user">
                     <span onClick={login}>login</span>
                     <span>register</span>
                 </div>
