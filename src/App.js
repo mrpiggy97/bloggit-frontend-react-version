@@ -4,6 +4,7 @@ import { Switch, Route } from "react-router-dom";
 import HomeView from 'views/HomeView'
 import PostsByCommunity from 'views/PostsByCommunity'
 import PageNotFound from 'views/PageNotFound'
+import MainMenu from 'components/MainMenu'
 
 import './App.css';
 
@@ -12,6 +13,7 @@ function App() {
       <div id="app">
 
         <div id="app-header">
+          <MainMenu/>
         </div>
 
         <div id="app-views">
