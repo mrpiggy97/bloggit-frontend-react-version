@@ -11,9 +11,7 @@ const initialState = {
     fetchingPosts : false,
     fetchingStatus : {
         success : null,
-        error : null
     },
-    query : ""
 }
 
 //reducers are in essence getters for the app
