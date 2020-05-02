@@ -5,7 +5,7 @@ body{
 div#app{
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 2fr 27fr 2fr;
+  grid-template-rows: 80px 30fr 80px;
   grid-template-areas: "header"
                        "views"
                        "footer";
