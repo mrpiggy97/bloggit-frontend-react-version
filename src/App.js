@@ -19,11 +19,11 @@ function App() {
 
         <div id="app-views">
           <Switch>
-            <Route  exact path="/" render={(props) => <HomeView {...props}/>}/>
-            <Route  path="/posts/:community"
+            <Route exact path="/" render={(props) => <HomeView {...props}/>}/>
+            <Route exact path="/posts/:community"
                     render={(props) => <PostsByCommunity {...props }/>} 
             />
-            <Route path="/posts/search/:query" render={(props) => <Results {...props} /> } />
+            <Route exact path="/posts/search/:query" render={(props) => <Results {...props} /> } />
             <Route render={() => <PageNotFound/>} />
           </Switch>
         </div>
