@@ -21,6 +21,11 @@ export class DispatchActions{
         let action = actions.resolveUserCredentials
         this.dispatcher(action(newState))
     }
+
+    dispatchUpdateResults(page, query){
+        let action = actions.updateResults
+        this.dispatcher(action(page, query))
+    }
 }
 
 export default class MapActions{
@@ -42,6 +47,16 @@ export default class MapActions{
             }
         }
     }
+
+    ResultsToProps(dispatch){
+        let ActionDispatchers = new DispatchActions(dispatch)
+        return {
+            updateResults(page, query){
+                ActionDispatchers.dispatchUpdateResults(page, query)
+            }
+        }
+    }
+
     //components
     MainMenuActionsToProps(dispatch){
         let ActionDispatchers = new DispatchActions(dispatch)
@@ -56,6 +71,10 @@ export default class MapActions{
 
             resolveUserCredentials(newState){
                 ActionDispatchers.dispatchResolveUserCredentials(newState)
+            },
+
+            updateResults(page, query){
+                ActionDispatchers.dispatchUpdateResults(page, query)
             }
         }
     }

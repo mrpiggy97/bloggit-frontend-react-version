@@ -35,6 +35,17 @@ export class MapState{
             fetchingStatus : state.fetchingStatus
         }
     }
+
+    ResultsStateToProps(state){
+        return {
+            authenticated : state.authenticated,
+            posts : state.posts,
+            nextPage : state.nextPage,
+            previousPage : state.previousPage,
+            fetchingPosts : state.fetchingPosts,
+            fetchingStatus : state.fetchingStatus
+        }
+    }
 }
 
 export default mapStateToProps

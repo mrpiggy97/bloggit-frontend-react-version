@@ -1,14 +1,16 @@
 import updatePosts from './utils/updatePosts'
 import updateCommunityPosts from './utils/updateCommunityPosts'
+import updateResults from './utils/updateResults'
 
 
-//these are the actions
+//all actions should be wrapped inside actions const
 
 const actions = {
     resolveUserCredentials(newState){
         return { type: "RESOLVE_USER_CREDENTIALS", payload : newState }
     },
-    //these is an async action
+
+    //these are async actions
     updatePosts(page){
         return { type : "UPDATE_POSTS", payload : updatePosts(page) }
     },
@@ -18,6 +20,10 @@ const actions = {
             type : "UPDATE_COMMUNITY_POSTS",
             payload : updateCommunityPosts(page, community)
         }
+    },
+
+    updateResults(page, query){
+        return { type : "UPDATE_POSTS", payload : updateResults(page, query)}
     }
 }
 
