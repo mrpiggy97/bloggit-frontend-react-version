@@ -38,10 +38,15 @@ function ConnectedResults(props){
         setIsAuthenticated(props.authenticated)
     }, [props.posts, props.nextPage, props.previousPage, props.authenticated])
 
+    useEffect(() => {
+        props.updateResults(1, query)
+        //eslint-disable-next-line
+    },[ ])
+
     return(
         <div id="results">
             <div className="results-query">
-                <span>{query}</span>
+                <span>results for {query}</span>
             </div>
             <div className="posts-results">
                 {posts.map(post => {
