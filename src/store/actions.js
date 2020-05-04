@@ -17,7 +17,7 @@ const actions = {
 
     updateCommunityPosts(page, community){
         return {
-            type : "UPDATE_COMMUNITY_POSTS",
+            type : "UPDATE_POSTS",
             payload : updateCommunityPosts(page, community)
         }
     },
