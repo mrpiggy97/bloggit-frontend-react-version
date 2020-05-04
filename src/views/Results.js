@@ -31,13 +31,12 @@ function ConnectedResults(props){
         updatePosts(previousPage)
     }
 
-    //Results will only 
     useEffect(() => {
         setPosts(props.posts)
         setNextPage(props.nextPage)
         setPreviousPage(props.previousPage)
         setIsAuthenticated(props.authenticated)
-    },  [props.posts, props.nextPage, props.previousPage, props.authenticated])
+    }, [props.posts, props.nextPage, props.previousPage, props.authenticated])
 
     return(
         <div id="results">
@@ -72,8 +71,8 @@ function ConnectedResults(props){
 ConnectedResults.propTypes = {
     updateResults : PropTypes.func.isRequired,
     posts : PropTypes.array.isRequired,
-    nextPage : PropTypes.number.isRequired,
-    previousPage : PropTypes.number.isRequired,
+    nextPage : PropTypes.number,
+    previousPage : PropTypes.number,
     authenticated : PropTypes.bool.isRequired,
 }
 
