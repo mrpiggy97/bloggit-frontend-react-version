@@ -5,16 +5,16 @@ import { Route, MemoryRouter } from 'react-router-dom'
 
 
 import HomeView from 'views/HomeView'
-import { page1 } from 'tests/utils/fillPage'
+import { fakePage1 } from 'tests/utils/fillPage'
 import createStore, { unauthenticatedStore } from 'tests/utils/storeMocks'
 
 describe('initial test for HomeView view', () => {
 
     let mockedStoreWithPosts = createStore({
         ...unauthenticatedStore,
-        posts : page1.results,
-        nextPage : page1.next_page,
-        previousPage : page1.previous_page,
+        posts : fakePage1.results,
+        nextPage : fakePage1.next_page,
+        previousPage : fakePage1.previous_page,
     })
     mockedStoreWithPosts.dispatch = jest.fn()
 
