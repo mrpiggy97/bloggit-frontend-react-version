@@ -3,6 +3,7 @@ import { Switch, Route } from "react-router-dom";
 
 import HomeView from 'views/HomeView'
 import PostsByCommunity from 'views/PostsByCommunity'
+import Results from 'views/Results'
 import PageNotFound from 'views/PageNotFound'
 import MainMenu from 'components/MainMenu'
 
@@ -22,6 +23,7 @@ function App() {
             <Route  path="/posts/:community"
                     render={(props) => <PostsByCommunity {...props }/>} 
             />
+            <Route path="/posts/search/:query" render={(props) => <Results {...props} /> } />
             <Route render={() => <PageNotFound/>} />
           </Switch>
         </div>
