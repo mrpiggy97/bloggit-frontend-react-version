@@ -37,20 +37,6 @@ const rootReducer = (state = initialState, { type, payload }) => {
 
         case "UPDATE_POSTS_FAILED":
             return { ...state, ...payload }
-        
-        case "UPDATE_COMMUNITY_POSTS_PENDING":
-            return { ...state, fetchingPosts : true }
-        
-        case "UPDATE_COMMUNITY_POSTS_FULFILLED":
-            if(payload.authenticated !== state.authenticated){
-                let userPayload = Authentication.removeUserItemsFromStorage()
-                return { ...state, ...payload, ...userPayload }
-            }
-
-            return { ...state, ...payload }
-        
-        case "UPDATE_COMMUNITY_POSTS_FAILED":
-            return { ...state, ...payload }
 
         default:
             return state
