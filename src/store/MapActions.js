@@ -61,9 +61,6 @@ export default class MapActions{
     MainMenuActionsToProps(dispatch){
         let ActionDispatchers = new DispatchActions(dispatch)
         return {
-            updateCommunityPosts(page, community){
-                ActionDispatchers.dispatchUpdateCommunityPosts(page, community)
-            },
 
             updatePosts(page){
                 ActionDispatchers.dispatchUpdatePosts(page)
