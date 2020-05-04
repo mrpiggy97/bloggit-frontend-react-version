@@ -3,20 +3,22 @@
 import fakePostsByCommunity from 'services/PostServices/__mocks__/fakePostsByCommunity'
 import searchPosts from 'services/PostServices/searchPosts'
 
-let realApi = localStorage.getItem("REACT_APP_MODE") === "dev" ? fakePostsByCommunity : searchPosts
+let realApi = process.env.REACT_APP_MODE === "dev" ? fakePostsByCommunity : searchPosts
 
-async function updateResults(page, query){
+const updateResults = async (page, query) => {
     let newState
+    let response
     try{
-        let response =  await realApi(page, query)
+        response =  await realApi(page, query)
         newState = {
-            posts : response.results,
-            nextPage : response.next_page,
-            previousPage : response.previousPage,
-            authenticated : response.authenticated,
+            posts : response.data.results,
+            nextPage : response.data.next_page,
+            previousPage : response.data.previous_page,
+            authenticated : response.data.authenticated,
             fetchingStatus : {
                 success : true
-            }
+            },
+            fetchingPosts : false
         }
     }
     catch(error){
@@ -25,11 +27,12 @@ async function updateResults(page, query){
         newState = {
             fetchingStatus : {
                 success : false
-            }
+            },
+            fetchingPosts : false
         }
     }
 
-    return newState
+    return Promise.resolve(newState)
 }
 
 export default updateResults
