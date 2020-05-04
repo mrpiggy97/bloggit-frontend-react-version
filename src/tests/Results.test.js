@@ -41,6 +41,6 @@ describe("initial test", () => {
 
         fireEvent.click(wrapper.getByText("next page"))
         expect(mockedUnAuthenticatedStore.dispatch).toHaveBeenCalledTimes(1)
-        expect(wrapper.getByText("test1")).toBeInTheDocument()
+        expect(wrapper.getByText("results for test1")).toBeInTheDocument()
     })
 })
