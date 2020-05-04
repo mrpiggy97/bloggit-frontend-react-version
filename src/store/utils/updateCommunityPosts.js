@@ -1,7 +1,7 @@
 import getPostsByCommunity from 'services/PostServices/getPostsByCommunity'
 import fakePostsByCommunity from 'services/PostServices/__mocks__/fakePostsByCommunity'
 
-const realAPI = process.env.REACT_APP_MODE === "dev" ? fakePostsByCommunity : getPostsByCommunity
+let realAPI = process.env.REACT_APP_MODE === "dev" ? fakePostsByCommunity : getPostsByCommunity
 
 const updateCommunityPosts = async (page, community) => {
     let response
@@ -21,7 +21,7 @@ const updateCommunityPosts = async (page, community) => {
     }
     
     catch (error) {
-        console.log("error ocurred at updatePostsByCommunity module")
+        console.log("error ocurred at updateCommunityPosts module in store utils directory")
         console.log(error)
         newState = {
             fetchingStatus : {

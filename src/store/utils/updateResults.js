@@ -3,7 +3,7 @@
 import fakePostsByCommunity from 'services/PostServices/__mocks__/fakePostsByCommunity'
 import searchPosts from 'services/PostServices/searchPosts'
 
-let realApi = process.env.REACT_APP_MODE === "dev" ? fakePostsByCommunity : searchPosts
+const realApi = process.env.REACT_APP_MODE === "dev" ? fakePostsByCommunity : searchPosts
 
 const updateResults = async (page, query) => {
     let newState
