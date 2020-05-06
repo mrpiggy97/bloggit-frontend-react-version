@@ -1,9 +1,9 @@
-div#posts-by-community{
+div#common-view{
     display: grid;
     grid-template-columns: 50%;
-    grid-template-rows: 5% 50;
-    grid-template-areas:    "community-slug"
-                            "community-posts";
+    grid-template-rows: 5% 50fr;
+    grid-template-areas:    "common-title"
+                            "common-posts";
     justify-content: center;
     border-style: solid;
     border-width: 2px;
@@ -11,16 +11,16 @@ div#posts-by-community{
     grid-gap: 20px;
 }
 
-div#community-slug{
+div#common-title{
     display: grid;
-    grid-area: community-slug;
+    grid-area: common-title;
     justify-items: center;
     align-items: center;
 }
 
-div#community-posts{
+div#common-posts{
     display: grid;
-    grid-area : community-posts;
+    grid-area : common-posts;
     align-items: flex-start;
     grid-gap: 20px;
 }
