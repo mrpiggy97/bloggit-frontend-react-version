@@ -7,64 +7,66 @@ import PostInfo from '../components/PostInfo'
 import { MapState } from 'store/getters'
 import MapActions from 'store/MapActions'
 
+import "./css/CommonView.css"
+
 let stateMapper = new MapState()
 let actionMapper = new MapActions()
 
 function ConnectedResults(props){
 
-    const [posts, setPosts] = useState(props.posts)
-    const [nextPage, setNextPage] = useState(props.nextPage)
-    const [previousPage, setPreviousPage] = useState(props.previousPage)
-    const [IsAuthenticated, setIsAuthenticated] = useState(props.authenticated)
     const { query } = useParams()
     const history = useHistory()
-
-    const updatePosts = (page) => {
-        props.updateResults(page, query)
-    }
+    const [showPosts, setShowPosts] = useState(false)
 
     const getNextPagePosts = () => {
-        updatePosts(nextPage)
+        props.updateResults(props.nextPage, query)
     }
 
     const getPreviousPagePosts = () => {
-        updatePosts(previousPage)
+        props.updateResults(props.previousPage, query)
     }
-
-    useEffect(() => {
-        setPosts(props.posts)
-        setNextPage(props.nextPage)
-        setPreviousPage(props.previousPage)
-        setIsAuthenticated(props.authenticated)
-    }, [props.posts, props.nextPage, props.previousPage, props.authenticated])
 
     useEffect(() => {
         props.updateResults(1, query)
         //eslint-disable-next-line
-    },[ ])
+    }, [])
+
+    useEffect(() => {
+        let newValue = props.fetchingPosts === false ? true : false
+        setShowPosts(newValue)
+    }, [props.fetchingPosts])
 
     return(
-        <div id="results">
-            <div className="results-query">
-                <span>results for {query}</span>
+        <div id="common-view">
+            <div id="common-title">
+                {props.posts.length > 0
+                    ? <span>results for {query}</span>
+                    : <span>no results for {query}</span>
+                }
             </div>
-            <div className="posts-results">
-                {posts.map(post => {
-                    return <PostInfo
-                            info={post}
-                            isPreview={true}
-                            IsAuthenticated={IsAuthenticated}
-                            history={history}
-                            key={post.uuid}
-                            />
-                })}
-            </div>
+            {showPosts && !props.fetchingPosts ?
+                <div id="common-posts">
+                    {props.posts.map(post => {
+                        return <PostInfo
+                                info={post}
+                                isPreview={true}
+                                IsAuthenticated={props.authenticated}
+                                history={history}
+                                key={post.uuid}
+                                />
+                    })}
+                </div> :
+                <div id="commom-posts">
+                    <span>loading</span>
+                </div> 
+            }
+
             <div className="arrows">
-                {previousPage
+                {props.previousPage
                     ? <span onClick={getPreviousPagePosts}>previous page</span>
                     : <span>previous page</span>
                 }
-                {nextPage
+                {props.nextPage
                     ? <span onClick={getNextPagePosts}>next page</span>
                     : <span>next page</span>
                 }
@@ -79,6 +81,8 @@ ConnectedResults.propTypes = {
     nextPage : PropTypes.number,
     previousPage : PropTypes.number,
     authenticated : PropTypes.bool.isRequired,
+    fetchingPosts : PropTypes.bool.isRequired,
+    fetchingStatus : PropTypes.object.isRequired
 }
 
 const Results = connect(stateMapper.ResultsStateToProps, actionMapper.ResultsToProps)
