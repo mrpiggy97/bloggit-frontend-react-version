@@ -21,7 +21,9 @@ export class MapState{
             authenticated : state.authenticated,
             posts : state.posts,
             nextPage : state.nextPage,
-            previousPage : state.previousPage
+            previousPage : state.previousPage,
+            fetchingPosts : state.fetchingPosts,
+            fetchingStatus : state.fetchingStatus
         }
     }
 
