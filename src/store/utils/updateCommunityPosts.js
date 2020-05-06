@@ -16,7 +16,6 @@ const updateCommunityPosts = async (page, community) => {
             fetchingStatus : {
                 success : true,
             },
-            fetchingPosts : false
         }    
     }
     
@@ -27,8 +26,6 @@ const updateCommunityPosts = async (page, community) => {
             fetchingStatus : {
                 success : false,
             },
-
-            fetchingPosts : false
         }
     }
     return Promise.resolve(newState)
