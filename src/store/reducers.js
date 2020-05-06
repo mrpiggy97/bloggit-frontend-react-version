@@ -30,7 +30,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
         case "UPDATE_POSTS_FULFILLED":
             if(payload.authenticated !== state.authenticated){
                 let userPayload = Authentication.removeUserItemsFromStorage()
-                return { ...state, ...payload, ...userPayload }
+                return { ...state, ...payload, ...userPayload, fetchingPosts : false }
             }
 
             return { ...state, ...payload }
