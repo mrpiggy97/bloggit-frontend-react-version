@@ -7,7 +7,7 @@ import promise from 'redux-mock-store'
 import { BrowserRouter, Route } from 'react-router-dom'
 
 import PostInfo, { ConnectedPostInfo } from 'components/PostInfo'
-import { unauthenticatedStore, authenticatedStore } from './utils/storeMocks'
+import createStore, { unauthenticatedStore, authenticatedStore } from './utils/storeMocks'
 
 const mockStore = configStore([promise])
 jest.mock("services/PostServices/likePost")
@@ -27,7 +27,6 @@ describe('test suit for PostInfo component', () => {
     let wrapper
     let instance
     let connectedComponent
-    let titleProps = { className : 'post-title' }
 
     beforeEach(() => {
         info = {
@@ -48,7 +47,7 @@ describe('test suit for PostInfo component', () => {
                     <BrowserRouter>
                         <Route render={(props) => {
                             return <PostInfo {...props} info={info} isPreview={true}
-                                    IsAuthenticated={unauthenticatedStore.authenticated} />
+                                    isAuthenticated={unauthenticatedStore.authenticated} />
                         }}/>
                     </BrowserRouter>
                 </Provider>
@@ -69,26 +68,7 @@ describe('test suit for PostInfo component', () => {
 
     it('checks that component renders as expected', () => {
         expect(wrapper.toJSON()).toMatchSnapshot()
-        expect(instance.findByType(ConnectedPostInfo).props.IsAuthenticated).toBe(false)
-    })
-
-    it('checks that store methods work as expected', async () => {
-        let expectedPayload = {
-            username : "mrpiggy97",
-            profile_pic : null,
-            token : "1234123msddadsd",
-            user_communities : [],
-            authenticated : true
-        }
-
-        let expectedType = "RESOLVE_USER_CREDENTIALS"
-        connectedComponent = instance.findByType(ConnectedPostInfo)
-        connectedComponent.findByProps(titleProps).props.onClick()
-        expect(UnauthenticateStore.dispatch).toHaveBeenCalledTimes(1)
-        expect(UnauthenticateStore.dispatch).toHaveBeenCalledWith({
-            type : expectedType,
-            payload : expectedPayload
-        })
+        expect(instance.findByType(ConnectedPostInfo).props.isAuthenticated).toBe(false)
     })
 })
 
@@ -122,7 +102,7 @@ describe('test methods that call an api', () => {
                     <BrowserRouter>
                         <Route render={(props) => {
                             return <PostInfo {...props} info={info} isPreview={true}
-                                    IsAuthenticated={true} />
+                                    isAuthenticated={true} />
                         }} />
                     </BrowserRouter>
                 </Provider>
@@ -172,7 +152,7 @@ describe('test the dom', () => {
                 <BrowserRouter>
                     <Route render={(props) => {
                         return <PostInfo {...props} info={info} isPreview={false}
-                                IsAuthenticated={unauthenticatedStore.authenticated}/>
+                                isAuthenticated={unauthenticatedStore.authenticated}/>
                     }} />
                 </BrowserRouter>
             </Provider>
@@ -185,7 +165,5 @@ describe('test the dom', () => {
 
     it('checks no problem arises with the dom', () => {
         expect(wrapper.getByText(info.owner.username)).toBeInTheDocument()
-        fireEvent.click(wrapper.getByText(info.owner.username))
-        expect(UnauthenticateStore.dispatch).toHaveBeenCalledTimes(1)
     })
 })

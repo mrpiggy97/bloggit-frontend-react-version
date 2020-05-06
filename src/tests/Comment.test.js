@@ -71,7 +71,7 @@ describe('test initial render and like and report methods', () => {
     it('checks that component renders normally', () => {
         let wrapper = render(
             <Provider store={unauthenticatedStore}>
-                <Comment info={info}/>
+                <Comment info={info} isAuthenticated={false}/>
             </Provider>
         )
 
@@ -83,7 +83,7 @@ describe('test initial render and like and report methods', () => {
     it("checks component render with authenticated user", () => {
         let wrapper2 = render(
             <Provider store={authenticatedStore}>
-                <Comment info={info2}/>
+                <Comment info={info2} isAuthenticated={true}/>
             </Provider>
         )
 
@@ -102,7 +102,7 @@ describe('test comment object', () => {
         act(() => {
             wrapper = create(
                 <Provider store={unauthenticatedStore}>
-                    <Comment info={info}/>
+                    <Comment info={info} isAuthenticated={false}/>
                 </Provider>
             )
         })
@@ -120,7 +120,7 @@ describe('test comment object', () => {
         act(() => {
             wrapper = create(
                 <Provider store={authenticatedStore}>
-                    <Comment info={info2}/>
+                    <Comment info={info2} isAuthenticated={true}/>
                 </Provider>
             )
         })

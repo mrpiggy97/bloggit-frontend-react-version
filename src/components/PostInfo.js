@@ -53,11 +53,11 @@ export class ConnectedPostInfo extends React.Component{
 
     async like(){
 
-        if(this.state.liked || !this.props.IsAuthenticated){
+        if(this.state.liked || !this.props.isAuthenticated){
             return null
         }
 
-        else if(!this.state.liked && this.props.IsAuthenticated){
+        else if(!this.state.liked && this.props.isAuthenticated){
             try {
                 await likePost(this.state.uuid)
                 this.setState((prevState) => {
@@ -77,11 +77,11 @@ export class ConnectedPostInfo extends React.Component{
 
     async report(){
         
-        if(this.state.reported || !this.props.IsAuthenticated){
+        if(this.state.reported || !this.props.isAuthenticated){
             return null
         }
         
-        else if(!this.state.reported && this.props.IsAuthenticated){
+        else if(!this.state.reported && this.props.isAuthenticated){
 
             try {
                 await reportPost(this.state.uuid)
@@ -130,7 +130,7 @@ export class ConnectedPostInfo extends React.Component{
                         })}
                     </div>
 
-                    { this.props.IsAuthenticated ?
+                    { this.props.isAuthenticated ?
                         <div className="interaction">
                             <span className="likes">{this.state.likes}</span>
                             { !this.state.liked ?
@@ -167,7 +167,7 @@ export class ConnectedPostInfo extends React.Component{
 ConnectedPostInfo.propTypes = {
     info : PropTypes.object.isRequired,
     isPreview : PropTypes.bool.isRequired,
-    IsAuthenticated : PropTypes.bool.isRequired,
+    isAuthenticated : PropTypes.bool.isRequired,
     history : PropTypes.object.isRequired,
     resolveUserCredentials : PropTypes.func.isRequired
 }

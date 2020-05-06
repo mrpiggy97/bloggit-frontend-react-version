@@ -23,7 +23,6 @@ exports[`test suit for PostInfo component checks that component renders as expec
   </div>
   <span
     className="post-title"
-    onClick={[Function]}
   >
     title test
   </span>
