@@ -14,7 +14,6 @@ let stateMapper = new MapState()
 export class ConnectedPostsByCommunity extends React.Component{
     constructor(props){
         super(props)
-        this.updatePosts = this.updatePosts.bind(this)
         this.getNextPagePosts = this.getNextPagePosts.bind(this)
         this.getPreviousPagePosts = this.getPreviousPagePosts.bind(this)
     }
@@ -23,18 +22,18 @@ export class ConnectedPostsByCommunity extends React.Component{
         if(!this.props.nextPage){
             return null
         }
-        this.props.updateCommunityPosts(this.props.nextPage, this.state.community)
+        this.props.updateCommunityPosts(this.props.nextPage, this.props.match.params.community)
     }
 
     getPreviousPagePosts(){
         if(!this.props.previousPage){
             return null
         }
-        this.props.updateCommunityPosts(this.props.previousPage, this.state.community)
+        this.props.updateCommunityPosts(this.props.previousPage, this.props.match.params.community)
     }
 
     componentDidMount(){
-        this.props.updateCommunityPosts(1, this.state.community)
+        this.props.updateCommunityPosts(1, this.props.match.params.community)
     }
 
     render(){
@@ -48,7 +47,7 @@ export class ConnectedPostsByCommunity extends React.Component{
                         return <PostInfo
                                 info={post}
                                 isPreview={true}
-                                IsAuthenticated={this.props.authenticated}
+                                isAuthenticated={this.props.authenticated}
                                 history={this.props.history}
                                 key={post.uuid}
                                 />
