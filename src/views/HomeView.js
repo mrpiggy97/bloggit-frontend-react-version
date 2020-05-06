@@ -14,29 +14,22 @@ export class ConnectedHomeView extends React.Component{
     constructor(props){
         super(props)
 
-        this.state = {
-            posts : props.posts,
-            nextPage : props.nextPage,
-            previousPage : props.previousPage,
-            authenticated : props.authenticated
-        }
-
         this.getNextPagePosts = this.getNextPagePosts.bind(this)
         this.getPreviousPagePosts = this.getPreviousPagePosts.bind(this)
     }
 
     getNextPagePosts(){
-        if(this.state.nextPage <= 1){
+        if(this.props.nextPage <= 1){
             return null
         }
-        this.props.updatePosts(this.state.nextPage)
+        this.props.updatePosts(this.props.nextPage)
     }
 
     getPreviousPagePosts(){
-        if(this.state.previousPage <= 0){
+        if(this.props.previousPage <= 0){
             return null
         }
-        this.props.updatePosts(this.state.previousPage)
+        this.props.updatePosts(this.props.previousPage)
     }
 
     componentDidMount(){
@@ -45,22 +38,11 @@ export class ConnectedHomeView extends React.Component{
         }
     }
 
-    componentDidUpdate(prevProps){
-        if(prevProps.posts !== this.props.posts){
-            this.setState({
-                posts : this.props.posts,
-                nextPage : this.props.nextPage,
-                previousPage : this.props.previousPage,
-                authenticated : this.props.authenticated
-            })
-        }
-    }
-
     render(){
         return(
             <div id="home-view">
                 <div id="home-posts">
-                    {this.state.posts.map(post => {
+                    {this.props.posts.map(post => {
                         return <PostInfo
                                 info={post}
                                 isPreview={true}
@@ -71,12 +53,12 @@ export class ConnectedHomeView extends React.Component{
                     })}          
                 </div>
                 <div className="pagination-arrows">
-                    {this.state.previousPage > 0 ?
+                    {this.props.previousPage > 0 ?
                         <span className="previous-page-active"
                         onClick={this.getPreviousPagePosts}>prev page</span> :
                         <span className="previous-page-inactive">prev</span>
                     }
-                    {this.state.nextPage > 1 ?
+                    {this.props.nextPage > 1 ?
                         <span className="next-page-active"
                         onClick={this.getNextPagePosts}>next page</span> :
                         <span className="next-page-inactive">next</span>
@@ -92,6 +74,8 @@ ConnectedHomeView.propTypes = {
     updatePosts : PropTypes.func.isRequired,
     posts : PropTypes.array.isRequired,
     nextPage : PropTypes.number,
+    fetchingPosts : PropTypes.bool.isRequired,
+    fetchingStatus : PropTypes.object.isRequired,
     previousPage : PropTypes.number,
     history : PropTypes.object.isRequired
 }
