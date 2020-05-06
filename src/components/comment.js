@@ -1,16 +1,19 @@
-import React, { useState, useEffect, useMemo } from 'react'
+import React, { useState, useMemo } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import { mapAuthenticatedToProps } from '../store/getters'
+import MapActions from 'store/MapActions'
+
+let actionMapper = new MapActions()
 
 export function ConnectedComment(props){
+    //aspects of props.info will change so it is a good idea to
+    //set props.info as state
     const [info, setInfo] = useState(props.info)
-    const [isAuthenticated, setIsAuthenticated] = useState(props.authenticated)
     const [showParent, setShowParent] = useState(false)
 
     const like = () => {
-        if(info.liked || !isAuthenticated){
+        if(info.liked || !props.isAuthenticated){
             return null
         }
         let newState = { ...info }
@@ -20,7 +23,7 @@ export function ConnectedComment(props){
     }
 
     const report = () => {
-        if(info.reported || !isAuthenticated){
+        if(info.reported || !props.isAuthenticated){
             return null
         }
         let newState = { ...info, reported : true}
@@ -32,14 +35,10 @@ export function ConnectedComment(props){
         setShowParent(newValue)
     }
 
-    useEffect(() => {
-        setIsAuthenticated(props.authenticated)
-    }, [props.authenticated])
-
 
     let classes = useMemo(() => {
         let baseClass
-        let interactive = isAuthenticated ? 'authenticated' : 'unauthenticated'
+        let interactive = props.isAuthenticated ? 'authenticated' : 'unauthenticated'
 
         if(info.is_original){
             baseClass = 'original-comment'
@@ -50,13 +49,13 @@ export function ConnectedComment(props){
 
         return `${baseClass} ${interactive}`
 
-    }, [props.authenticated])
+    }, [props.isAuthenticated])
 
     return (
         <div className={classes}>
             <div className="comment-header">
-                <span className="owner">{props.info.owner.username}</span>
-                <span className="date">{props.info.date}</span>
+                <span className="owner">{info.owner.username}</span>
+                <span className="date">{info.date}</span>
             </div>
             <div className="comment-body">
                 {info.has_parent
@@ -75,14 +74,14 @@ export function ConnectedComment(props){
                 }
                 <span className="comment-text">{info.text}</span>
                 <div className="comment-footer">
-                    {isAuthenticated  
+                    {props.isAuthenticated  
                         ?   info.liked
                                 ?   <span className="like-active">like</span>
                                 :   <span className="like-inactive" onClick={like}>like</span>
                         : <span className="like-inactive">like</span>
                     }
                     <span className="comment-likes">{info.likes}</span>
-                    {isAuthenticated
+                    {props.isAuthenticated
                         ?   info.reported
                                 ?   null
                                 :   <span className="report" onClick={report}>report</span>
@@ -94,11 +93,12 @@ export function ConnectedComment(props){
     )
 }
 
-ConnectedComment.propTypes = {
+Comment.propTypes = {
     info : PropTypes.object.isRequired,
-    authenticated : PropTypes.bool.isRequired
+    isAuthenticated : PropTypes.bool.isRequired,
+    resolveUserCredentials : PropTypes.func.isRequired
 }
 
-const Comment = connect(mapAuthenticatedToProps)(ConnectedComment)
+const Comment = connect(null, actionMapper.Comment)(ConnectedComment)
 
 export default Comment
