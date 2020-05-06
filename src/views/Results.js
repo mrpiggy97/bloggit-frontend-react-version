@@ -25,23 +25,23 @@ function ConnectedResults(props){
     const getPreviousPagePosts = () => {
         props.updateResults(props.previousPage, query)
     }
-
-    useEffect(() => {
-        props.updateResults(1, query)
-        //eslint-disable-next-line
-    }, [])
-
     useEffect(() => {
         let newValue = props.fetchingPosts === false ? true : false
         setShowPosts(newValue)
     }, [props.fetchingPosts])
+
+    useEffect(() => {
+        if(props.posts.length === 0){
+            props.updateResults(1, query)
+        }
+    })
 
     return(
         <div id="common-view">
             <div id="common-title">
                 {props.posts.length > 0
                     ? <span>results for {query}</span>
-                    : <span>no results for {query}</span>
+                    : <span>no results for {query}`</span>
                 }
             </div>
             {showPosts && !props.fetchingPosts ?
@@ -50,7 +50,7 @@ function ConnectedResults(props){
                         return <PostInfo
                                 info={post}
                                 isPreview={true}
-                                IsAuthenticated={props.authenticated}
+                                isAuthenticated={props.authenticated}
                                 history={history}
                                 key={post.uuid}
                                 />
@@ -89,3 +89,5 @@ const Results = connect(stateMapper.ResultsStateToProps, actionMapper.ResultsToP
                         (ConnectedResults)
 
 export default Results
+
+//TODO MAY 6 CHANGE TEST FOR POSTINFO CHANGES HAVE BEEN MADE TO COMPONENT
