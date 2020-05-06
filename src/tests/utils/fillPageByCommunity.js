@@ -1,4 +1,5 @@
 import fillPage, { fakePost } from './fillPage'
+import { emptyResultsPage } from './emptyResults'
 
 let fakePost1 = { ...fakePost, communities : ["test1"] }
 let fakePost2 = { ...fakePost, communities : ["test2"] }
@@ -28,9 +29,9 @@ function fillPageByCommunity(community){
         break
 
         default:
-            page1 = null
-            page2 = null
-            page3 = null
+            page1 = emptyResultsPage
+            page2 = emptyResultsPage
+            page3 = emptyResultsPage
     }
 
     return { page1, page2, page3 }
