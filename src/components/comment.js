@@ -93,7 +93,7 @@ export function ConnectedComment(props){
     )
 }
 
-Comment.propTypes = {
+ConnectedComment.propTypes = {
     info : PropTypes.object.isRequired,
     isAuthenticated : PropTypes.bool.isRequired,
     resolveUserCredentials : PropTypes.func.isRequired
