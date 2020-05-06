@@ -6,7 +6,7 @@ import MapActions from 'store/MapActions'
 import { MapState } from 'store/getters'
 import PostInfo from 'components/PostInfo'
 
-import "./css/PostsByCommunity.css"
+import "./css/CommonView.css"
 
 let actionMapper = new MapActions()
 let stateMapper = new MapState() 
@@ -14,88 +14,54 @@ let stateMapper = new MapState()
 export class ConnectedPostsByCommunity extends React.Component{
     constructor(props){
         super(props)
-
-        this.state = {
-            community : this.props.match.params.community,
-            authenticated : this.props.authenticated,
-            posts : this.props.posts,
-            nextPage : this.props.nextPage,
-            previousPage : this.props.previousPage,
-            fetchingPosts : this.props.fetchingPosts,
-            fetchingStatus : this.props.fetchingStatus
-        }
-
         this.updatePosts = this.updatePosts.bind(this)
         this.getNextPagePosts = this.getNextPagePosts.bind(this)
         this.getPreviousPagePosts = this.getPreviousPagePosts.bind(this)
     }
 
-    updatePosts(page){
-        this.props.updateCommunityPosts(page, this.state.community)
-    }
-
     getNextPagePosts(){
-        if(!this.state.nextPage){
+        if(!this.props.nextPage){
             return null
         }
-        this.updatePosts(this.state.nextPage)
+        this.props.updateCommunityPosts(this.props.nextPage, this.state.community)
     }
 
     getPreviousPagePosts(){
-        if(!this.state.previousPage){
+        if(!this.props.previousPage){
             return null
         }
-        this.updatePosts(this.state.previousPage)
+        this.props.updateCommunityPosts(this.props.previousPage, this.state.community)
     }
 
     componentDidMount(){
-        this.updatePosts(1)
-    }
-
-    componentDidUpdate(prevProps){
-        if(prevProps !== this.props){
-            this.setState({
-                authenticated : this.props.authenticated,
-                posts : this.props.posts,
-                nextPage : this.props.nextPage,
-                previousPage : this.props.previousPage,
-                fetchingPosts : this.props.fetchingPosts,
-                fetchingStatus : this.props.fetchingStatus
-            })
-
-            if(prevProps.match.params.community !== this.props.match.params.community){
-                this.setState({
-                    community : this.props.match.params.community
-                })
-            }
-        }
+        this.props.updateCommunityPosts(1, this.state.community)
     }
 
     render(){
         return(
-            <div id="posts-by-community">
-                <div id="community-slug">
-                    <span>{this.state.community}</span>
+            <div id="common-view">
+                <div id="common-title">
+                    <span>{this.props.match.params.community}</span>
                 </div>
-                <div id="community-posts">
-                    {this.state.posts.map(post => {
+                <div id="common-posts">
+                    {this.props.posts.map(post => {
                         return <PostInfo
                                 info={post}
                                 isPreview={true}
-                                IsAuthenticated={this.state.authenticated}
+                                IsAuthenticated={this.props.authenticated}
                                 history={this.props.history}
                                 key={post.uuid}
                                 />
                     })}
                 </div>
                 <div className="arrows">
-                    {this.state.previousPage
+                    {this.props.previousPage
                         ?   <span className="previous-page active" onClick={this.getPreviousPagePosts}>
                                 previous page
                             </span>
                         :   <span className="previous-page inactive">previous</span>
                     }
-                    {this.state.nextPage
+                    {this.props.nextPage
                         ?   <span className="next-page active" onClick={this.getNextPagePosts}>
                                 next page
                             </span>
