@@ -84,4 +84,13 @@ export default class MapActions{
             }
         }
     }
+
+    Comment(dispatch){
+        let ActionDispatchers = new DispatchActions(dispatch)
+        return {
+            resolveUserCredentials(newState){
+                ActionDispatchers.dispatchResolveUserCredentials(newState)
+            }
+        }
+    }
 }
