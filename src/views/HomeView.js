@@ -47,7 +47,7 @@ export class ConnectedHomeView extends React.Component{
                                 info={post}
                                 isPreview={true}
                                 key={post.uuid}
-                                IsAuthenticated={this.props.authenticated}
+                                isAuthenticated={this.props.authenticated}
                                 history={this.props.history}
                                 />
                     })}          
