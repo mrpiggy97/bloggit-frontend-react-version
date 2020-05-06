@@ -1,16 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import './css/PostInfo.css'
 import { connect } from 'react-redux'
-import MapActions from '../store/MapActions'
 
 import likePost from '../services/PostServices/likePost.js'
 import reportPost from '../services/PostServices/reportPost.js'
+import MapActions from 'store/MapActions'
 
+import './css/PostInfo.css'
 //Note: the first argument for connect must be null when mapStateToProps is
 //absent
 
-let actionMapper = new MapActions()
+let actionMappers = new MapActions()
 
 export class ConnectedPostInfo extends React.Component{
     constructor(props){
@@ -32,7 +32,6 @@ export class ConnectedPostInfo extends React.Component{
         this.fakeReport = this.fakeReport.bind(this)
         this.like = this.like.bind(this)
         this.report = this.report.bind(this)
-        this.fakeAuthentication = this.fakeAuthentication.bind(this)
         this.redirectToCommunity = this.redirectToCommunity.bind(this)
     }
 
@@ -103,17 +102,6 @@ export class ConnectedPostInfo extends React.Component{
         }
     }
 
-    fakeAuthentication(){
-        let userCredentials = {
-            token : '1234123msddadsd',
-            username : 'mrpiggy97',
-            profile_pic : null,
-            user_communities : [],
-            authenticated : this.props.IsAuthenticated ? false : true
-        }
-        this.props.resolveUserCredentials(userCredentials)
-    }
-
     render(){
         let activeOrInactive = this.state.liked ? 'active' : 'inactive'
         let likeClasses = `fa fa-thumbs-up ${activeOrInactive}`
@@ -126,7 +114,7 @@ export class ConnectedPostInfo extends React.Component{
                     <span className="date">{this.state.date}</span>
                 </div>
 
-                <span className="post-title" onClick={this.fakeAuthentication}>{this.state.title}</span>
+                <span className="post-title">{this.state.title}</span>
 
                 { !this.state.isPreview ?
                     <span className="post-body">{this.state.text}</span> :  null
@@ -180,11 +168,10 @@ ConnectedPostInfo.propTypes = {
     info : PropTypes.object.isRequired,
     isPreview : PropTypes.bool.isRequired,
     IsAuthenticated : PropTypes.bool.isRequired,
-    resolveUserCredentials : PropTypes.func.isRequired,
-    history : PropTypes.object.isRequired
+    history : PropTypes.object.isRequired,
+    resolveUserCredentials : PropTypes.func.isRequired
 }
 
-const PostInfo = connect(null, actionMapper.PostInfoActionsToProps)
-                        (ConnectedPostInfo)
+const PostInfo = connect(null, actionMappers.PostInfoActionsToProps)(ConnectedPostInfo)
 
 export default PostInfo
