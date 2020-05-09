@@ -61,18 +61,9 @@ export default class MapActions{
     MainMenuActionsToProps(dispatch){
         let ActionDispatchers = new DispatchActions(dispatch)
         return {
-
-            updatePosts(page){
-                ActionDispatchers.dispatchUpdatePosts(page)
-            },
-
             resolveUserCredentials(newState){
                 ActionDispatchers.dispatchResolveUserCredentials(newState)
             },
-
-            updateResults(page, query){
-                ActionDispatchers.dispatchUpdateResults(page, query)
-            }
         }
     }
 
