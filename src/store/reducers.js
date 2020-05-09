@@ -8,7 +8,7 @@ const initialState = {
     posts : [],
     nextPage : 0,
     previousPage : 0,
-    fetchingPosts : false,
+    fetchingPosts : null,
     fetchingStatus : {
         success : null,
     },
@@ -32,8 +32,8 @@ const rootReducer = (state = initialState, { type, payload }) => {
                 let userPayload = Authentication.removeUserItemsFromStorage()
                 return { ...state, ...payload, ...userPayload, fetchingPosts : false }
             }
-
-            return { ...state, ...payload }
+            
+            return { ...state, ...payload, fetchingPosts : false }
 
         case "UPDATE_POSTS_FAILED":
             return { ...state, ...payload }
