@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
+import { setTimeout } from 'timers'
 
 import PostInfo from '../components/PostInfo'
 import MapActions from 'store/MapActions'
@@ -14,6 +15,10 @@ export class ConnectedHomeView extends React.Component{
     constructor(props){
         super(props)
 
+        this.state = {
+            showPosts : false
+        }
+
         this.getNextPagePosts = this.getNextPagePosts.bind(this)
         this.getPreviousPagePosts = this.getPreviousPagePosts.bind(this)
     }
@@ -22,36 +27,52 @@ export class ConnectedHomeView extends React.Component{
         if(this.props.nextPage <= 1){
             return null
         }
+        this.setState({showPosts : false})
         this.props.updatePosts(this.props.nextPage)
+        this.ShowNewPosts()
     }
 
     getPreviousPagePosts(){
         if(this.props.previousPage <= 0){
             return null
         }
+        this.setState({showPosts : false})
         this.props.updatePosts(this.props.previousPage)
+        this.ShowNewPosts()
+    }
+
+    ShowNewPosts(){
+        setTimeout(() => {
+            this.setState({showPosts : true})
+        }, 750);
     }
 
     componentDidMount(){
-        if(this.props.nextPage === 0 && this.props.previousPage === 0){
-            this.props.updatePosts(1)//initial page
-        }
+        //meaning app was mounted with an empty store
+        this.props.updatePosts(1)
+        this.ShowNewPosts()
     }
 
     render(){
         return(
             <div id="home-view">
-                <div id="home-posts">
-                    {this.props.posts.map(post => {
-                        return <PostInfo
-                                info={post}
-                                isPreview={true}
-                                key={post.uuid}
-                                isAuthenticated={this.props.authenticated}
-                                history={this.props.history}
-                                />
-                    })}          
-                </div>
+                {this.state.showPosts ?
+                    <div id="home-posts">
+                        {this.props.posts.map(post => {
+                            return <PostInfo
+                                    info={post}
+                                    isPreview={true}
+                                    key={post.uuid}
+                                    isAuthenticated={this.props.authenticated}
+                                    history={this.props.history}
+                                    />
+                        })}          
+                    </div> :
+                    
+                    <div id="home-posts">
+                        <span>loading...</span>
+                    </div>
+                }
                 <div className="pagination-arrows">
                     {this.props.previousPage > 0 ?
                         <span className="previous-page-active"
@@ -74,7 +95,7 @@ ConnectedHomeView.propTypes = {
     updatePosts : PropTypes.func.isRequired,
     posts : PropTypes.array.isRequired,
     nextPage : PropTypes.number,
-    fetchingPosts : PropTypes.bool.isRequired,
+    fetchingPosts : PropTypes.bool,
     fetchingStatus : PropTypes.object.isRequired,
     previousPage : PropTypes.number,
     history : PropTypes.object.isRequired

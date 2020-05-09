@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
+import { setTimeout } from 'timers'
 
 import MapActions from 'store/MapActions'
 import { MapState } from 'store/getters'
@@ -14,6 +15,11 @@ let stateMapper = new MapState()
 export class ConnectedPostsByCommunity extends React.Component{
     constructor(props){
         super(props)
+
+        this.state = {
+            showPosts : false
+        }
+
         this.getNextPagePosts = this.getNextPagePosts.bind(this)
         this.getPreviousPagePosts = this.getPreviousPagePosts.bind(this)
     }
@@ -22,18 +28,29 @@ export class ConnectedPostsByCommunity extends React.Component{
         if(!this.props.nextPage){
             return null
         }
+        this.setState({showPosts : false})
         this.props.updateCommunityPosts(this.props.nextPage, this.props.match.params.community)
+        this.showNewPosts()
     }
 
     getPreviousPagePosts(){
         if(!this.props.previousPage){
             return null
         }
+        this.setState({showPosts : false})
         this.props.updateCommunityPosts(this.props.previousPage, this.props.match.params.community)
+        this.showNewPosts()
+    }
+
+    showNewPosts(){
+        setTimeout(() => {
+            this.setState({showPosts : true})
+        }, 750);
     }
 
     componentDidMount(){
         this.props.updateCommunityPosts(1, this.props.match.params.community)
+        this.showNewPosts()
     }
 
     render(){
@@ -42,17 +59,24 @@ export class ConnectedPostsByCommunity extends React.Component{
                 <div id="common-title">
                     <span>{this.props.match.params.community}</span>
                 </div>
-                <div id="common-posts">
-                    {this.props.posts.map(post => {
-                        return <PostInfo
-                                info={post}
-                                isPreview={true}
-                                isAuthenticated={this.props.authenticated}
-                                history={this.props.history}
-                                key={post.uuid}
-                                />
-                    })}
-                </div>
+                {this.state.showPosts ?
+                    <div id="common-posts">
+                        {this.props.posts.map(post => {
+                            return <PostInfo
+                                    info={post}
+                                    isPreview={true}
+                                    isAuthenticated={this.props.authenticated}
+                                    history={this.props.history}
+                                    key={post.uuid}
+                                    />
+                        })}
+                    </div> :
+                    <div id="common-posts">
+                        <span>loading...</span>
+                    </div>           
+                }
+
+
                 <div className="arrows">
                     {this.props.previousPage
                         ?   <span className="previous-page active" onClick={this.getPreviousPagePosts}>
@@ -77,7 +101,7 @@ ConnectedPostsByCommunity.propTypes = {
     posts : PropTypes.array.isRequired,
     nextPage : PropTypes.number,
     previousPage : PropTypes.number,
-    fetchingPosts : PropTypes.bool.isRequired,
+    fetchingPosts : PropTypes.bool,
     fetchingStatus : PropTypes.object.isRequired,
     updateCommunityPosts : PropTypes.func.isRequired,
     match : PropTypes.object.isRequired,

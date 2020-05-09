@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useParams, useHistory } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import { setTimeout } from 'timers'
 
 import PostInfo from '../components/PostInfo'
 import { MapState } from 'store/getters'
@@ -19,22 +20,50 @@ function ConnectedResults(props){
     const [showPosts, setShowPosts] = useState(false)
 
     const getNextPagePosts = () => {
+        //to prevent double clicking next page
+        //user should wait for the request page to load before
+        //trying to get to the next one
+        if(showNewPosts === false){
+            return null
+        }
+        setShowPosts(false)
         props.updateResults(props.nextPage, query)
+        showNewPosts()
     }
 
     const getPreviousPagePosts = () => {
-        props.updateResults(props.previousPage, query)
-    }
-    useEffect(() => {
-        let newValue = props.fetchingPosts === false ? true : false
-        setShowPosts(newValue)
-    }, [props.fetchingPosts])
-
-    useEffect(() => {
-        if(props.posts.length === 0){
-            props.updateResults(1, query)
+        //to prevent double clicking next page
+        //user should wait for the requested page before
+        //trying to get the previous one
+        if(showNewPosts === false){
+            return null
         }
-    })
+        setShowPosts(false)
+        props.updateResults(props.previousPage, query)
+        showNewPosts()
+    }
+    //this will give time to the dom to finish updating posts
+    const showNewPosts = () => {
+        setTimeout(() => {
+            setShowPosts(true)
+        }, 750);
+    }
+
+    const componentHasMounted = () => {
+        props.updateResults(1, query)
+        showNewPosts()
+    }
+
+    const queryHasUpdated = () => {
+        setShowPosts(false)
+        props.updateResults(1, query)
+        showNewPosts()
+    }
+    //onyly will get called when it has been mounted
+    useEffect(componentHasMounted, [])
+
+    //only will get called when params have been updated
+    useEffect(queryHasUpdated, [query])
 
     return(
         <div id="common-view">
@@ -44,7 +73,7 @@ function ConnectedResults(props){
                     : <span>no results for {query}`</span>
                 }
             </div>
-            {showPosts && !props.fetchingPosts ?
+            {showPosts ?
                 <div id="common-posts">
                     {props.posts.map(post => {
                         return <PostInfo
@@ -56,9 +85,9 @@ function ConnectedResults(props){
                                 />
                     })}
                 </div> :
-                <div id="commom-posts">
-                    <span>loading</span>
-                </div> 
+                <div id="common-posts">
+                    <span>loading...</span>
+                </div>
             }
 
             <div className="arrows">
@@ -81,7 +110,7 @@ ConnectedResults.propTypes = {
     nextPage : PropTypes.number,
     previousPage : PropTypes.number,
     authenticated : PropTypes.bool.isRequired,
-    fetchingPosts : PropTypes.bool.isRequired,
+    fetchingPosts : PropTypes.bool,
     fetchingStatus : PropTypes.object.isRequired
 }
 
