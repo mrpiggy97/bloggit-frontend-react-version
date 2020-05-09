@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import PropTypes from 'prop-types'
-import { setTimeout } from 'timers'
 
 import { MapState } from 'store/getters'
 import MapActions from 'store/MapActions'
@@ -74,8 +73,6 @@ function ConnectedMainMenu(props){
 
 ConnectedMainMenu.propTypes = {
     resolveUserCredentials : PropTypes.func.isRequired,
-    updateResults : PropTypes.func.isRequired,
-    updatePosts : PropTypes.func.isRequired,
     authenticated : PropTypes.bool.isRequired,
     username : PropTypes.string
 }
