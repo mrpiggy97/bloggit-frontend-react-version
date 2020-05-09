@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import PropTypes from 'prop-types'
+import { setTimeout } from 'timers'
 
 import { MapState } from 'store/getters'
 import MapActions from 'store/MapActions'
@@ -20,12 +21,7 @@ function ConnectedMainMenu(props){
         setQuery(e.target.value)
     }
 
-    const searchPosts = (e) => {
-        e.preventDefault()
-        props.updateResults(1, query)
-        history.push(`/posts/search/${query}`)
-    }
-
+    //authentication
     const logout = () => {
         props.resolveUserCredentials({authenticated : false})
     }
@@ -40,12 +36,16 @@ function ConnectedMainMenu(props){
 
         props.resolveUserCredentials(newState)
     }
+    //routing
+    const searchPosts = (e) => {
+        e.preventDefault()
+        history.push(`/posts/search/${query}`)
+    }
 
     const goToHome = () => {
         if(history.location.pathname === "/"){
             return null
         }
-        props.updatePosts(1)
         history.push("/")
     }
     return(
