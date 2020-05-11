@@ -44,15 +44,16 @@ export class ConnectedHomeView extends React.Component{
     }
 
     ShowNewPosts(){
-        setTimeout(() => {
-            if(this._mounted){
-                this.setState({showPosts : true})                
-            }
-        }, 750);
+        if(this._mounted){
+            setTimeout(() => {
+                this.setState({showPosts : true})
+            }, 750);            
+        }
     }
 
     componentDidMount(){
         //meaning app was mounted with an empty store
+        this._mounted = true
         this.props.updatePosts(1)
         this.ShowNewPosts()
     }
