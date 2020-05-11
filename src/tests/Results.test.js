@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, fireEvent } from '@testing-library/react'
+import { render, fireEvent, act } from '@testing-library/react'
 import createStore, { unauthenticatedStore, authenticatedStore } from './utils/storeMocks'
 import { MemoryRouter, Route } from 'react-router-dom'
 import { Provider } from 'react-redux'
@@ -31,8 +31,10 @@ describe("initial test", () => {
 
         expect(mockedUnAuthenticatedStore.dispatch).toHaveBeenCalledTimes(1)
         expect(wrapper.getByText("results for test1")).toBeInTheDocument()
-
-        fireEvent.click(wrapper.getByText("next page"))
+        
+        act(() => {
+            fireEvent.click(wrapper.getByText("next page"))
+        })
         expect(mockedUnAuthenticatedStore.dispatch).toHaveBeenCalledTimes(2)
     })
 })
