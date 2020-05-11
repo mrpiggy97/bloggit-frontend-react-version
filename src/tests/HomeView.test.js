@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, fireEvent } from '@testing-library/react'
+import { render, fireEvent, act } from '@testing-library/react'
 import { Provider } from 'react-redux'
 import { Route, MemoryRouter } from 'react-router-dom'
 
@@ -17,10 +17,16 @@ describe('initial test for HomeView view', () => {
     })
     mockedStoreWithPosts.dispatch = jest.fn()
 
-    let unauthenticatedMockedStore = createStore({ ...unauthenticatedStore })
+    let unauthenticatedMockedStore = createStore({
+        ...unauthenticatedStore,
+        posts : fakePage1.results,
+        nextPage : fakePage1.next_page,
+        previousPage : fakePage1.previous_page
+    })
     unauthenticatedMockedStore.dispatch = jest.fn()
 
     it('checks that view has been mounted correctly', () => {
+
         let wrapper = render(
             <Provider store={unauthenticatedMockedStore}>
                 <MemoryRouter initialEntries={["/"]}>
@@ -29,7 +35,7 @@ describe('initial test for HomeView view', () => {
             </Provider>
         )
 
-        expect(wrapper.getByText('next')).toBeInTheDocument()
+        expect(wrapper.getByText('next page')).toBeInTheDocument()
         expect(unauthenticatedMockedStore.dispatch).toHaveBeenCalledTimes(1)
     })
 
@@ -45,7 +51,10 @@ describe('initial test for HomeView view', () => {
 
         expect(wrapper.getByText('next page')).toBeInTheDocument()
         expect(mockedStoreWithPosts.dispatch).toHaveBeenCalledTimes(1)
-        fireEvent.click(wrapper.getByText("next page"))
+
+        act(() => {
+            fireEvent.click(wrapper.getByText("next page"))
+        })
         expect(mockedStoreWithPosts.dispatch).toHaveBeenCalledTimes(2)
     })
 })
