@@ -19,6 +19,8 @@ export class ConnectedHomeView extends React.Component{
             showPosts : false
         }
 
+        this._mounted = false
+
         this.getNextPagePosts = this.getNextPagePosts.bind(this)
         this.getPreviousPagePosts = this.getPreviousPagePosts.bind(this)
     }
@@ -43,7 +45,9 @@ export class ConnectedHomeView extends React.Component{
 
     ShowNewPosts(){
         setTimeout(() => {
-            this.setState({showPosts : true})
+            if(this._mounted){
+                this.setState({showPosts : true})                
+            }
         }, 750);
     }
 
@@ -51,6 +55,10 @@ export class ConnectedHomeView extends React.Component{
         //meaning app was mounted with an empty store
         this.props.updatePosts(1)
         this.ShowNewPosts()
+    }
+
+    componentWillUnmount(){
+        this._mounted = false
     }
 
     render(){
