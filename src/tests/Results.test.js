@@ -8,15 +8,6 @@ import Results from 'views/Results'
 import { fakePage1, fakePage2 } from './utils/fillPage'
 
 //lets pretend the results from query give us the results from fakePage1 and fakePage2
-
-
-const mockedAuthenticatedStore = createStore({
-    ...authenticatedStore,
-    posts : fakePage1.results,
-    nextPage : fakePage1.next_page,
-    previousPage : fakePage1.previous_page,
-})
-
 const mockedUnAuthenticatedStore = createStore({
     ...unauthenticatedStore,
     posts : fakePage2.results,
@@ -24,7 +15,6 @@ const mockedUnAuthenticatedStore = createStore({
     previousPage : fakePage2.previous_page
 })
 
-mockedAuthenticatedStore.dispatch = jest.fn()
 mockedUnAuthenticatedStore.dispatch = jest.fn()
 
 describe("initial test", () => {
@@ -39,8 +29,10 @@ describe("initial test", () => {
             </Provider>
         )
 
-        fireEvent.click(wrapper.getByText("next page"))
         expect(mockedUnAuthenticatedStore.dispatch).toHaveBeenCalledTimes(1)
         expect(wrapper.getByText("results for test1")).toBeInTheDocument()
+
+        fireEvent.click(wrapper.getByText("next page"))
+        expect(mockedUnAuthenticatedStore.dispatch).toHaveBeenCalledTimes(2)
     })
 })
