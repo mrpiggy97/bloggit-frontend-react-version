@@ -14,7 +14,7 @@ let stateMapper = new MapState()
 let actionMapper = new MapActions()
 
 function ConnectedResults(props){
-
+    
     const { query } = useParams()
     const history = useHistory()
     const [showPosts, setShowPosts] = useState(false)
@@ -50,20 +50,15 @@ function ConnectedResults(props){
     }
 
     const componentHasMounted = () => {
+        if(showPosts){
+            setShowPosts(false)
+        }
         props.updateResults(1, query)
         showNewPosts()
     }
 
-    const queryHasUpdated = () => {
-        setShowPosts(false)
-        props.updateResults(1, query)
-        showNewPosts()
-    }
-    //onyly will get called when it has been mounted
-    useEffect(componentHasMounted, [])
-
-    //only will get called when params have been updated
-    useEffect(queryHasUpdated, [query])
+    //only will get called when view has been mounted and when query changes
+    useEffect(componentHasMounted, [query])
 
     return(
         <div id="common-view">
