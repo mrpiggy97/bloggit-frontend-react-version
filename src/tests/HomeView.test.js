@@ -3,7 +3,6 @@ import { render, fireEvent } from '@testing-library/react'
 import { Provider } from 'react-redux'
 import { Route, MemoryRouter } from 'react-router-dom'
 
-
 import HomeView from 'views/HomeView'
 import { fakePage1 } from 'tests/utils/fillPage'
 import createStore, { unauthenticatedStore } from 'tests/utils/storeMocks'
@@ -45,8 +44,8 @@ describe('initial test for HomeView view', () => {
         )
 
         expect(wrapper.getByText('next page')).toBeInTheDocument()
-        expect(mockedStoreWithPosts.dispatch).toHaveBeenCalledTimes(0)
-        fireEvent.click(wrapper.getByText("next page"))
         expect(mockedStoreWithPosts.dispatch).toHaveBeenCalledTimes(1)
+        fireEvent.click(wrapper.getByText("next page"))
+        expect(mockedStoreWithPosts.dispatch).toHaveBeenCalledTimes(2)
     })
 })
