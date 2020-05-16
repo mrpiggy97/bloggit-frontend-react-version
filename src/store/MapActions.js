@@ -30,27 +30,17 @@ export class DispatchActions{
 
 export default class MapActions{
     //views
-    HomeViewActionsToProps(dispatch){
+    RenderPostsToProps(dispatch){
         let ActionDispatchers = new DispatchActions(dispatch)
         return {
             updatePosts(page){
                 ActionDispatchers.dispatchUpdatePosts(page)
-            }
-        }
-    }
+            },
 
-    PostsByCommunityActionsToProps(dispatch){
-        let ActionDispatchers = new DispatchActions(dispatch)
-        return {
             updateCommunityPosts(page, community){
                 ActionDispatchers.dispatchUpdateCommunityPosts(page, community)
-            }
-        }
-    }
+            },
 
-    ResultsToProps(dispatch){
-        let ActionDispatchers = new DispatchActions(dispatch)
-        return {
             updateResults(page, query){
                 ActionDispatchers.dispatchUpdateResults(page, query)
             }
