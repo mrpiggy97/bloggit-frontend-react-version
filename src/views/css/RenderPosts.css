@@ -1,0 +1,46 @@
+div#render-posts{
+    display: grid;
+    grid-template-columns: 50%;
+    grid-template-rows: 5% 50fr 3%;
+    grid-template-areas:    "title"
+                            "posts"
+                            "arrows";
+    justify-content: center;
+    border-style: solid;
+    border-width: 2px;
+    border-color: darkgreen;
+    grid-gap: 20px;
+}
+
+div#title{
+    display: grid;
+    grid-area: title;
+    justify-items: center;
+    align-items: center;
+}
+
+div#posts{
+    display: grid;
+    grid-area : posts;
+    align-items: flex-start;
+    grid-gap: 20px;
+}
+
+div#arrows{
+    display: grid;
+    grid-area: arrows;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 1fr;
+    align-items: center;
+    justify-items: center;
+}
+
+i.arrow-active{
+    font-size: x-large;
+    color: teal;
+}
+
+i.arrow-inactive{
+    font-size: x-large;
+    color: grey;
+}
