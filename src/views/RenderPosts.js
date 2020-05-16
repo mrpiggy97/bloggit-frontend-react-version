@@ -154,9 +154,9 @@ function ConnectedRenderPosts(props){
                     : <i className="far fa-arrow-alt-circle-left arrow-inactive"></i>
                 }
                 {props.nextPage
-                    ? <i className="far fa-arrow-alt-circle-right arrow-active" role="icon"
-                        onClick={getNextPagePosts}/>
-                    : <i className="far fa-arrow-alt-circle-right arrow-inactive" role="icon"></i>
+                    ? <i className="far fa-arrow-alt-circle-right arrow-active"
+                    onClick={getNextPagePosts}/>
+                    : <i className="far fa-arrow-alt-circle-right arrow-inactive"></i>
                 }
             </div>
         </div>
