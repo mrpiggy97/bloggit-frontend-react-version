@@ -1,11 +1,9 @@
 import React from 'react';
 import { Switch, Route } from "react-router-dom";
 
-import HomeView from 'views/HomeView'
-import PostsByCommunity from 'views/PostsByCommunity'
-import Results from 'views/Results'
 import PageNotFound from 'views/PageNotFound'
 import MainMenu from 'components/MainMenu'
+import RenderPosts from 'views/RenderPosts'
 
 import './App.css';
 
@@ -19,11 +17,11 @@ function App() {
 
         <div id="app-views">
           <Switch>
-            <Route exact path="/" render={(props) => <HomeView {...props}/>}/>
-            <Route exact path="/posts/:community"
-                    render={(props) => <PostsByCommunity {...props }/>} 
+            <Route exact path="/" render={(props) => <RenderPosts {...props}/>}/>
+            <Route exact path="/posts/:query"
+                    render={(props) => <RenderPosts {...props }/>} 
             />
-            <Route exact path="/posts/search/:query" render={(props) => <Results {...props} /> } />
+            <Route exact path="/posts/search/:query" render={(props) => <RenderPosts {...props} /> }/>
             <Route render={() => <PageNotFound/>} />
           </Switch>
         </div>
