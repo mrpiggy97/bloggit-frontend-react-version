@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
-import { MapState } from 'store/getters'
+import MapState from 'store/MapState'
 import MapActions from 'store/MapActions'
 
 import "./css/MainMenu.css"

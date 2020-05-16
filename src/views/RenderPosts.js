@@ -6,7 +6,7 @@ import { setTimeout } from 'timers'
 import Loading from 'components/Loading'
 import PostInfo from 'components/PostInfo'
 import MapActions from 'store/MapActions'
-import { MapState } from 'store/getters'
+import MapState from 'store/MapState'
 import "./css/RenderPosts.css"
 
 let actionMappers = new MapActions()
