@@ -1,6 +1,9 @@
+import LoginAPIcall from 'services/Authentication/LoginAPIcall'
+import RegisterAPIcall from 'services/Authentication/RegisterAPIcall'
+import LogoutAPIcall from 'services/Authentication/LogoutAPIcall'
+
 class Authentication{
-    constructor(prevState, payload){
-        this.prevState = prevState
+    constructor(payload){
         this.payload = payload
         this.newState = null
     }
@@ -15,13 +18,13 @@ class Authentication{
             username : null,
             userCommunities : null,
             profilePic : null,
+            authenticated : false
         }
 
         return this.newState
     }
 
     removeUserCredentials(){
-
         window.localStorage.removeItem('bloggit_token')
         window.localStorage.removeItem('bloggit_username')
         window.localStorage.removeItem('bloggit_profile_pic')
@@ -32,10 +35,9 @@ class Authentication{
             username : null,
             profilePic : null,
             userCommunities : null,
-            token : null
         }
 
-        return { ...this.prevState, ...this.newState }
+        return this.newState
     }
 
     setUserCredentials(){
@@ -51,7 +53,7 @@ class Authentication{
             userCommunities : this.payload.communities
         }
 
-        return { ...this.prevState, ...this.newState }
+        return this.newState
     }
 
     setAuthenticationState(){
@@ -61,6 +63,45 @@ class Authentication{
         else{
             return this.removeUserCredentials()
         }
+    }
+}
+
+export async function Login(username, password){
+    let response
+    try {
+        response = await LoginAPIcall(username, password)
+        let auth = new Authentication(response)
+        return Promise.resolve(auth.setAuthenticationState())
+    }
+    catch (error) {
+        console.error("error ocurred at Login function in Authentication module")
+        console.error(error)
+        return Promise.resolve({ logging : null })
+    }
+}
+
+export async function Register(username, password1, password2){
+    let response
+    try{
+        response = await RegisterAPIcall(username, password1, password2)
+        let auth = new Authentication(response)
+        return auth.setAuthenticationState()
+    }
+    catch(error){
+        console.error("error ocurred at Register function at Authentication module")
+        console.error(error)
+        return Promise.resolve({ logging : null })
+    }
+}
+
+export async function Logout(){
+    try{
+        await LogoutAPIcall()
+        let auth = new Authentication({authenticated : false})
+        return auth.setAuthenticationState()
+    }
+    catch(error){
+        console.error("error ocurred at Logout function at Authentication module")
     }
 }
 
