@@ -26,6 +26,21 @@ export class DispatchActions{
         let action = actions.updateResults
         this.dispatcher(action(page, query))
     }
+
+    dispatchLogin(username, password){
+        let action = actions.login
+        this.dispatcher(action(username, password))
+    }
+
+    dispatchRegister(username, password1, password2){
+        let action = actions.register
+        this.dispatcher(action(username, password1, password2))
+    }
+
+    dispatchLogout(){
+        let action = actions.logout
+        this.dispatcher(action())
+    }
 }
 
 export default class MapActions{
@@ -47,16 +62,19 @@ export default class MapActions{
         }
     }
 
-    //components
-    MainMenuActionsToProps(dispatch){
+    AuthenticationToProps(dispatch){
         let ActionDispatchers = new DispatchActions(dispatch)
         return {
-            resolveUserCredentials(newState){
-                ActionDispatchers.dispatchResolveUserCredentials(newState)
+            login(username, password){
+                ActionDispatchers.dispatchLogin(username, password)
             },
+            registerUser(username, password1, password2){
+                ActionDispatchers.dispatchRegister(username, password1, password2)
+            }
         }
     }
 
+    //components
     PostInfoActionsToProps(dispatch){
         let ActionDispatchers = new DispatchActions(dispatch)
         return {
@@ -71,6 +89,15 @@ export default class MapActions{
         return {
             resolveUserCredentials(newState){
                 ActionDispatchers.dispatchResolveUserCredentials(newState)
+            }
+        }
+    }
+
+    MainMenuToProps(dispatch){
+        let ActionDispatchers = new DispatchActions(dispatch)
+        return {
+            logout(){
+                ActionDispatchers.dispatchLogout()
             }
         }
     }
