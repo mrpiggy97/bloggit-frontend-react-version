@@ -8,8 +8,8 @@ import MapActions from 'store/MapActions'
 
 import "./css/MainMenu.css"
 
-let stateMapper = new MapState()
-let actionMapper = new MapActions()
+let StateMapper = new MapState()
+let ActionMappers = new MapActions()
 
 function ConnectedMainMenu(props){
     const [query, setQuery] = useState("")
@@ -19,26 +19,18 @@ function ConnectedMainMenu(props){
     const updateQuery = (e) => {
         setQuery(e.target.value)
     }
-
-    //authentication
-    const logout = () => {
-        props.resolveUserCredentials({authenticated : false})
-    }
-
-    const login = () => {
-        let newState = {
-            authenticated : true,
-            username : 'fabianj444',
-            profilePic : null,
-            userCommunities : []
-        }
-
-        props.resolveUserCredentials(newState)
-    }
     //routing
     const searchPosts = (e) => {
         e.preventDefault()
         history.push(`/posts/search/${query}`)
+    }
+
+    const goToLogin = () => {
+        history.push("/authentication/login")
+    }
+
+    const goToRegistration = () => {
+        history.push("/authentication/register")
     }
 
     const goToHome = () => {
@@ -55,16 +47,18 @@ function ConnectedMainMenu(props){
                     <input type="text" onChange={updateQuery}/>
                     <button type="submit" id="search-posts">search</button>
                 </form>
-                <span>communities</span>
+                <span id="communities">communities</span>
             </div>
             {props.authenticated ?
                 <div id="user">
                     <span>{props.username}</span>
-                    <span onClick={logout}>logout</span>
+                    <span>logout</span>
+                    <span>post</span>
                 </div> :
                 <div id="user">
-                    <span onClick={login}>login</span>
-                    <span>register</span>
+                    <span onClick={goToLogin}>login</span>
+                    <span onClick={goToRegistration}>register</span>
+                    <span>post</span>
                 </div>
             }
         </div>
@@ -72,12 +66,12 @@ function ConnectedMainMenu(props){
 }
 
 ConnectedMainMenu.propTypes = {
-    resolveUserCredentials : PropTypes.func.isRequired,
     authenticated : PropTypes.bool.isRequired,
-    username : PropTypes.string
+    username : PropTypes.string,
+    logout : PropTypes.func.isRequired
 }
 
-const MainMenu = connect(stateMapper.MainMenuStateToProps, actionMapper.MainMenuActionsToProps)
-                        (ConnectedMainMenu)
+const MainMenu = connect(StateMapper.MainMenuStateToProps, ActionMappers.MainMenuToProps)
+                    (ConnectedMainMenu)
 
 export default MainMenu
