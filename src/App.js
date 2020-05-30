@@ -4,6 +4,7 @@ import { Switch, Route } from "react-router-dom";
 import PageNotFound from 'views/PageNotFound'
 import MainMenu from 'components/MainMenu'
 import RenderPosts from 'views/RenderPosts'
+import Authentication from 'views/Authentication'
 
 import './App.css';
 
@@ -22,6 +23,9 @@ function App() {
                     render={(props) => <RenderPosts {...props }/>} 
             />
             <Route exact path="/posts/search/:query" render={(props) => <RenderPosts {...props} /> }/>
+            <Route exact path="/authentication/:action"
+              render={(props) => <Authentication {...props}/>}
+            />
             <Route render={() => <PageNotFound/>} />
           </Switch>
         </div>

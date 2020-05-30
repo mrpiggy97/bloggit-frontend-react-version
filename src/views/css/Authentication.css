@@ -1,0 +1,100 @@
+div#authentication-view{
+    display: grid;
+    grid-template-columns: 50%;
+    grid-template-rows: 50%;
+    grid-template-areas: "form";
+    justify-content: center;
+    align-content: flex-start;
+}
+
+form#register-form{
+    display: grid;
+    grid-template-columns: 50%;
+    grid-template-rows: repeat(10, 1fr);
+    grid-template-areas: "username-label"
+                         "username"
+                         "password1-label"
+                         "password1"
+                         "toggle-password1"
+                         "password2-label"
+                         "password2"
+                         "toggle-password2"
+                         "action-button"
+                         "message";
+    justify-content: center;
+    border-style: solid;
+    border-color: blueviolet;
+}
+
+form#login-form{
+    display: grid;
+    grid-template-columns: 50%;
+    grid-template-rows: repeat(10, 1fr);
+    grid-template-areas: "username-label"
+                         "username"
+                         "password1-label"
+                         "password1"
+                         "toggle-password1"
+                         "action-button"
+                         "message";
+    justify-content: center;
+    border-style: solid;
+    border-color: blueviolet;
+}
+
+span#username{
+    display: grid;
+    grid-area : username
+}
+
+span#username-label{
+    display: grid;
+    grid-area : username-label;
+}
+
+span#password1{
+    display: grid;
+    grid-area: password1;
+    min-height: 50%;
+    max-height: 50%;
+}
+
+span#password1-label{
+    display: grid;
+    grid-area: password1-label;
+}
+
+span#toggle-password1{
+    display: grid;
+    grid-area : toggle-password1;
+    cursor: pointer;
+}
+
+span#password2{
+    display: grid;
+    grid-area : password2;
+    max-height: 50%;
+    min-height: 50%;
+}
+
+span#password2-label{
+    display: grid;
+    grid-area : password2-label;
+}
+
+span#toggle-password2{
+    display: grid;
+    grid-area: toggle-password2;
+    cursor: pointer;
+}
+
+span#message{
+    display: grid;
+    grid-area: message;
+}
+
+button#action-button{
+    display: grid;
+    grid-area: action-button;
+    align-items: center;
+}
