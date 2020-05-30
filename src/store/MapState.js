@@ -21,4 +21,11 @@ export default class MapState{
             fetchingStatus : state.fetchingStatus
         }
     }
+
+    Authentication(state){
+        return {
+            authenticated : state.authenticated,
+            logging : state.logging
+        }
+    }
 }
