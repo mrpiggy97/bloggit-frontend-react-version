@@ -5,18 +5,16 @@ div#authentication-view{
     grid-template-areas: "form";
     justify-content: center;
     align-content: flex-start;
+    margin-top: 50px;
 }
 
 form#register-form{
     display: grid;
     grid-template-columns: 50%;
-    grid-template-rows: repeat(10, 1fr);
-    grid-template-areas: "username-label"
-                         "username"
-                         "password1-label"
+    grid-template-rows: repeat(7, 1fr);
+    grid-template-areas: "username"
                          "password1"
                          "toggle-password1"
-                         "password2-label"
                          "password2"
                          "toggle-password2"
                          "action-button"
@@ -24,15 +22,14 @@ form#register-form{
     justify-content: center;
     border-style: solid;
     border-color: blueviolet;
+    grid-gap: 20px;
 }
 
 form#login-form{
     display: grid;
     grid-template-columns: 50%;
-    grid-template-rows: repeat(10, 1fr);
-    grid-template-areas: "username-label"
-                         "username"
-                         "password1-label"
+    grid-template-rows: repeat(7, 1fr);
+    grid-template-areas: "username"
                          "password1"
                          "toggle-password1"
                          "action-button"
@@ -40,6 +37,7 @@ form#login-form{
     justify-content: center;
     border-style: solid;
     border-color: blueviolet;
+    grid-gap: 20px;
 }
 
 span#username{

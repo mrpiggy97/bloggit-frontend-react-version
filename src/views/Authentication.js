@@ -86,20 +86,20 @@ function ConnectedAuthentication(props){
     return(
         <div id="authentication-view">
             <form id={action === "login" ? "login-form" : "register-form"} onSubmit={callAction}>
-
-                <label id="username-label" htmlFor="username">username</label>                
+            
                 <input type="text"
                 id="username"
                 value={username}
                 onChange={updateUsername}
+                placeholder="username"
                 />
 
-                <label id="password1-label" htmlFor="password1">password1</label>
                 <input
                 type={showPassword1 ? "text" : "password"}
                 id="password1"
                 value={password1}
                 onChange={updatePassword1}
+                placeholder="password1"
                 />
 
                 <span onClick={togglePasswordText1} id="toggle-password1">
@@ -108,13 +108,13 @@ function ConnectedAuthentication(props){
                 {action === "register"
                     ?
                     (
-                        <React.Fragment>
-                            <label id="password2-label" htmlFor="password2">password2</label>                            
+                        <React.Fragment>                           
                             <input
                             type={showPassword2 ? "text" : "password"}
                             onChange={updatePassword2}
                             value={password2}
                             id="password2"
+                            placeholder="password2"
                             />
                             <span onClick={togglePasswordText2} id="toggle-password2">
                                 {showPassword2 ? "hide password2" : "show password2" }
