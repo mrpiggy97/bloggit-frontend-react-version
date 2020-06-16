@@ -39,6 +39,11 @@ function ConnectedMainMenu(props){
         }
         history.push("/")
     }
+    
+    const signOut = () => {
+        props.logout()
+    }
+
     return(
         <div id="main-menu">
             <div id="home">
@@ -52,7 +57,7 @@ function ConnectedMainMenu(props){
             {props.authenticated ?
                 <div id="user">
                     <span>{props.username}</span>
-                    <span>logout</span>
+                    <span onClick={signOut}>logout</span>
                     <span>post</span>
                 </div> :
                 <div id="user">
