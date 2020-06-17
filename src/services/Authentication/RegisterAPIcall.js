@@ -5,16 +5,16 @@ export default function RegisterAPIcall(username, password1, password2){
     
     let url = `${BASE_URL}/register/`
     return axios({
-        method : "POST",
+        method : 'POST',
         headers : {
             'Content-type' : 'application/json',
             'accept' : 'application/json'
         },
         url : url,
-        body : JSON.stringify({
+        data : JSON.stringify({
             username : username,
             password1 : password1,
-            password2 : password2
+            password2 : password2,
         }),
         timeout : 5000
     })
