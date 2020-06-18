@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useHistory, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
@@ -18,7 +18,6 @@ function ConnectedAuthentication(props){
     const [showPassword1, setShowPassword1] = useState(false)
     const [showPassword2, setShowPassword2] = useState(false)
 
-    const history = useHistory()
     const { action } = useParams()
 
     const message1 = "either username or password are incorrect"
@@ -63,7 +62,10 @@ function ConnectedAuthentication(props){
 
     const redirectToHome = () => {
         if(props.authenticated){
-            history.push("/")
+            //api has a wierd bug were token won't properly be authenticated
+            //unless window is reloaded, so history.push won't be used
+            //since it redirects users between pages without reloading window
+            window.location.replace("/")
         }
     }
 
@@ -79,10 +81,9 @@ function ConnectedAuthentication(props){
                 setMessage("")
         }
     }
-    //authenticated will only change after action has been called
+    //authenticated will only change after action has been changed
     useEffect(redirectToHome, [props.authenticated])
     useEffect(updateMessage, [action])
-
     return(
         <div id="authentication-view">
             <form id={action === "login" ? "login-form" : "register-form"} onSubmit={callAction}>
