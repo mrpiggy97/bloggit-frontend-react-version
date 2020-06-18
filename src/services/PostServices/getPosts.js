@@ -1,16 +1,27 @@
 import { authenticateTokenInstance, withoutTokenInstance } from '../axiosInstances'
 
 const getPosts = (page) => {
-    if(window.localStorage.getItem('bloggit_token')){
+
+    const url = `/posts/?page=${page}`
+    const method = "GET"
+    const token = localStorage.getItem("bloggit_token")
+
+    if(token){
+        console.log(token)
+        //api rest-framework-jwt package has a bug where
+        //there has to be a waiting period for token to be accepted
+        //after redirecting from authentication view to home view
+        //in the frontend
         return authenticateTokenInstance({
-            method: 'get',
-            url: `posts/?page=${page}`,
+            method: method,
+            url: url,
         })
     }
+    
     else{
         return withoutTokenInstance({
-            method: 'get',
-            url: `posts/?page=${page}`
+            method: method,
+            url: url
         })
     }
 }
