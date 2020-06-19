@@ -24,22 +24,28 @@ const rootReducer = (state = initialState, { type, payload }) => {
             return { ...state, logging : true}
         
         case "LOGIN_FULFILLED":
-            console.log("logging fulfilled")
-            return { ...state, ...payload }
+            return { ...state, ...payload, logging : false }
         
         case "LOGIN_FAILED":
-            console.log("logging has faileds")
             return { ...state, logging : null }
+        
+        case "LOGOUT_PENDING":  
+            return state
+        
+        case "LOGOUT_FULFILLED":
+            return { ...state, ...payload }
+        
+        case "LOGOUT_FAILED":
+            return state
 
         case "UPDATE_POSTS_PENDING":
             return { ...state, fetchingPosts : true }
 
         case "UPDATE_POSTS_FULFILLED":
-            if(payload.authenticated !== state.authenticated){
-                let userPayload = Authentication.removeUserItemsFromStorage()
-                return { ...state, ...payload, ...userPayload, fetchingPosts : false }
+            if(payload.authenticated === false){
+                let newUserCredentials = Authentication.removeUserItemsFromStorage()
+                return { ...state, ...payload, ...newUserCredentials, fetchingPosts : false }
             }
-            
             return { ...state, ...payload, fetchingPosts : false }
 
         case "UPDATE_POSTS_FAILED":
