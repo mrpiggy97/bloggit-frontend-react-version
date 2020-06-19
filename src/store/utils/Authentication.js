@@ -9,10 +9,10 @@ class Authentication{
     }
 
     static removeUserItemsFromStorage(){
-        window.localStorage.removeItem('bloggit_token')
-        window.localStorage.removeItem('bloggit_username')
-        window.localStorage.removeItem('bloggit_profile_pic')
-        window.localStorage.removeItem('bloggit_user_communities')
+        localStorage.removeItem('bloggit_token')
+        localStorage.removeItem('bloggit_username')
+        localStorage.removeItem('bloggit_profile_pic')
+        localStorage.removeItem('bloggit_user_communities')
         //should only return an object containing null user credentials
         this.newState = {
             username : null,
@@ -25,10 +25,10 @@ class Authentication{
     }
 
     removeUserCredentials(){
-        window.localStorage.removeItem('bloggit_token')
-        window.localStorage.removeItem('bloggit_username')
-        window.localStorage.removeItem('bloggit_profile_pic')
-        window.localStorage.removeItem('bloggit_user_communities')
+        localStorage.removeItem('bloggit_token')
+        localStorage.removeItem('bloggit_username')
+        localStorage.removeItem('bloggit_profile_pic')
+        localStorage.removeItem('bloggit_user_communities')
         
         this.newState = {
             authenticated : false,
@@ -41,10 +41,10 @@ class Authentication{
     }
 
     setUserCredentials(){
-        window.localStorage.setItem('bloggit_token', this.payload.token)
-        window.localStorage.setItem('bloggit_username', this.payload.username)
-        window.localStorage.setItem('bloggit_profile_pic',  this.payload.profile_pic)
-        window.localStorage.setItem('bloggit_user_communities', this.payload.user_communities)
+        localStorage.setItem('bloggit_token', this.payload.token)
+        localStorage.setItem('bloggit_username', this.payload.username)
+        localStorage.setItem('bloggit_profile_pic',  this.payload.profile_pic)
+        localStorage.setItem('bloggit_user_communities', this.payload.communities)
 
         this.newState = {
             authenticated : true,
@@ -84,7 +84,7 @@ export async function Register(username, password1, password2){
     let response
     try{
         response = await RegisterAPIcall(username, password1, password2)
-        let auth = new Authentication(response)
+        let auth = new Authentication(response.data)
         return auth.setAuthenticationState()
     }
     catch(error){
