@@ -17,6 +17,7 @@ function ConnectedRenderPosts(props){
     const [showPosts, setShowPosts] = useState(false)
     const { query } = useParams()
     const location = useLocation()
+    //history is a required prop for PostInfo Component
     const history = useHistory()
 
     const isMounted = useRef(false)
@@ -65,7 +66,7 @@ function ConnectedRenderPosts(props){
             postsUpdater(props.nextPage, query)
         }
         else{
-            props.updatePosts(props.nextPage)
+            postsUpdater(props.nextPage)
         }
         showNewPosts()
     }
