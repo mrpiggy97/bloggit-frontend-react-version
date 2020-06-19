@@ -27,9 +27,8 @@ function fillPage(nextPage, previousPage, id, fakedPost) {
         count : results.length,
         next_page : nextPage,
         previous_page : previousPage,
-        authenticated : window.localStorage.getItem('bloggit_token') ? true : false
+        authenticated : localStorage.getItem('bloggit_token') ? true : false
     }
-
     return page
 }
 
